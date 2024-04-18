@@ -1,6 +1,8 @@
+import { BASE_URL } from "@/lib/constants"
+
 export const siteConfig = {
   name: "YazziUI",
-  url: "https://ui.shadcn.com",
+  url: BASE_URL,
   ogImage: "https://ui.shadcn.com/og.jpg",
   description:
     "Beautifully designed components that you can copy and paste into your apps. Accessible. Customizable. Open Source.",
