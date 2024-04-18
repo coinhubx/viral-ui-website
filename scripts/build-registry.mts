@@ -453,7 +453,7 @@ async function buildThemes() {
     }
   }`
 
-  for (const baseColor of ["slate", "gray", "zinc", "neutral", "stone"]) {
+  for (const baseColor of ["zinc"]) {
     const base: Record<string, any> = {
       inlineColors: {},
       cssVars: {},
@@ -580,7 +580,7 @@ async function buildThemes() {
     // Build registry/themes/[theme].json
     // ----------------------------------------------------------------------------
     rimraf.sync(path.join(REGISTRY_PATH, "themes"))
-    for (const baseColor of ["slate", "gray", "zinc", "neutral", "stone"]) {
+    for (const baseColor of ["zinc"]) {
       const payload = {
         name: baseColor,
         label: baseColor.charAt(0).toUpperCase() + baseColor.slice(1),
