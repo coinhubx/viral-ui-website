@@ -35,3 +35,4 @@ yarn-error.log*
 .turbo
 .contentlayer
 tsconfig.tsbuildinfo
+next-env.d.ts
