@@ -3,10 +3,10 @@ import { existsSync, promises as fs, readFileSync } from "fs";
 import path, { basename } from "path";
 import template from "lodash.template";
 import { rimraf } from "rimraf";
-import { colorMapping, colors } from "../registry/colors";
-import { registry } from "../registry/registry";
-import { Registry, registrySchema } from "../registry/schema";
-import { styles } from "../registry/styles";
+import { colorMapping, colors } from "../src/registry/colors";
+import { registry } from "../src/registry/registry";
+import { Registry, registrySchema } from "../src/registry/schema";
+import { styles } from "../src/registry/styles";
 
 const REGISTRY_PATH = path.join(process.cwd(), "public/registry");
 
@@ -57,7 +57,7 @@ export const Index: Record<string, any> = {
 `;
 
   // ----------------------------------------------------------------------------
-  // Build registry/index.json.
+  // Build src/registry/index.json.
   // ----------------------------------------------------------------------------
   const names = registry.filter((item) => item.type === "components:ui");
   const registryJson = JSON.stringify(names, null, 2);
@@ -74,7 +74,7 @@ export const Index: Record<string, any> = {
 }
 
 // ----------------------------------------------------------------------------
-// Build registry/styles/[style]/[name].json.
+// Build src/registry/styles/[style]/[name].json.
 // ----------------------------------------------------------------------------
 async function buildStyles(registry: Registry) {
   for (const style of styles) {
@@ -92,7 +92,7 @@ async function buildStyles(registry: Registry) {
 
       const files = item.files?.map((file) => {
         const content = readFileSync(
-          path.join(process.cwd(), "registry", style.name, file),
+          path.join(process.cwd(), "src/registry", style.name, file),
           "utf8",
         );
 
@@ -116,7 +116,7 @@ async function buildStyles(registry: Registry) {
   }
 
   // ----------------------------------------------------------------------------
-  // Build registry/styles/index.json.
+  // Build src/registry/styles/index.json.
   // ----------------------------------------------------------------------------
   const stylesJson = JSON.stringify(styles, null, 2);
   await fs.writeFile(
@@ -127,7 +127,7 @@ async function buildStyles(registry: Registry) {
 }
 
 // ----------------------------------------------------------------------------
-// Build registry/colors/index.json.
+// Build src/registry/colors/index.json.
 // ----------------------------------------------------------------------------
 async function buildThemes() {
   const colorsTargetPath = path.join(REGISTRY_PATH, "colors");
@@ -175,7 +175,7 @@ async function buildThemes() {
   );
 
   // ----------------------------------------------------------------------------
-  // Build registry/colors/[base].json.
+  // Build src/registry/colors/[base].json.
   // ----------------------------------------------------------------------------
   const BASE_STYLES = `@tailwind base;
   @tailwind components;
@@ -290,8 +290,6 @@ async function buildThemes() {
     base["cssVarsTemplate"] = template(BASE_STYLES_WITH_VARIABLES)({
       colors: base["cssVars"],
     });
-
-    console.log(base);
 
     await fs.writeFile(
       path.join(REGISTRY_PATH, `colors/${baseColor}.json`),

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const registryEntrySchema = z.object({
+const registryEntrySchema = z.object({
   name: z.string(),
   description: z.string().optional(),
   dependencies: z.array(z.string()).optional(),
@@ -14,7 +14,5 @@ export const registryEntrySchema = z.object({
 });
 
 export const registrySchema = z.array(registryEntrySchema);
-
-export type RegistryEntry = z.infer<typeof registryEntrySchema>;
 
 export type Registry = z.infer<typeof registrySchema>;

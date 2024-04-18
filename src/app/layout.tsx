@@ -1,4 +1,4 @@
-import "@/styles/globals.css";
+import "./globals.css";
 import { Metadata } from "next";
 
 import { fontSans } from "@/lib/fonts";

@@ -25,9 +25,9 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
+      "@/*": ["./src/*"],
       "contentlayer/generated": ["./.contentlayer/generated"],
-      "@components/*": ["./registry/default/ui/*"]
+      "@components/*": ["./src/registry/default/ui/*"]
     },
     "plugins": [
       {
