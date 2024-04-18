@@ -5,17 +5,6 @@ import * as React from "react"
 
 export const Index: Record<string, any> = {
   "default": {
-    "accordion": {
-      name: "accordion",
-      type: "components:ui",
-      registryDependencies: undefined,
-      component: React.lazy(() => import("@/registry/default/ui/accordion")),
-      source: "",
-      files: ["registry/default/ui/accordion.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
     "alert": {
       name: "alert",
       type: "components:ui",
@@ -38,17 +27,6 @@ export const Index: Record<string, any> = {
       subcategory: "undefined",
       chunks: []
     },
-    "aspect-ratio": {
-      name: "aspect-ratio",
-      type: "components:ui",
-      registryDependencies: undefined,
-      component: React.lazy(() => import("@/registry/default/ui/aspect-ratio")),
-      source: "",
-      files: ["registry/default/ui/aspect-ratio.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
     "avatar": {
       name: "avatar",
       type: "components:ui",
@@ -56,28 +34,6 @@ export const Index: Record<string, any> = {
       component: React.lazy(() => import("@/registry/default/ui/avatar")),
       source: "",
       files: ["registry/default/ui/avatar.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
-    "badge": {
-      name: "badge",
-      type: "components:ui",
-      registryDependencies: undefined,
-      component: React.lazy(() => import("@/registry/default/ui/badge")),
-      source: "",
-      files: ["registry/default/ui/badge.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
-    "breadcrumb": {
-      name: "breadcrumb",
-      type: "components:ui",
-      registryDependencies: undefined,
-      component: React.lazy(() => import("@/registry/default/ui/breadcrumb")),
-      source: "",
-      files: ["registry/default/ui/breadcrumb.tsx"],
       category: "undefined",
       subcategory: "undefined",
       chunks: []
@@ -93,83 +49,6 @@ export const Index: Record<string, any> = {
       subcategory: "undefined",
       chunks: []
     },
-    "calendar": {
-      name: "calendar",
-      type: "components:ui",
-      registryDependencies: ["button"],
-      component: React.lazy(() => import("@/registry/default/ui/calendar")),
-      source: "",
-      files: ["registry/default/ui/calendar.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
-    "card": {
-      name: "card",
-      type: "components:ui",
-      registryDependencies: undefined,
-      component: React.lazy(() => import("@/registry/default/ui/card")),
-      source: "",
-      files: ["registry/default/ui/card.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
-    "carousel": {
-      name: "carousel",
-      type: "components:ui",
-      registryDependencies: ["button"],
-      component: React.lazy(() => import("@/registry/default/ui/carousel")),
-      source: "",
-      files: ["registry/default/ui/carousel.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
-    "checkbox": {
-      name: "checkbox",
-      type: "components:ui",
-      registryDependencies: undefined,
-      component: React.lazy(() => import("@/registry/default/ui/checkbox")),
-      source: "",
-      files: ["registry/default/ui/checkbox.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
-    "collapsible": {
-      name: "collapsible",
-      type: "components:ui",
-      registryDependencies: undefined,
-      component: React.lazy(() => import("@/registry/default/ui/collapsible")),
-      source: "",
-      files: ["registry/default/ui/collapsible.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
-    "command": {
-      name: "command",
-      type: "components:ui",
-      registryDependencies: ["dialog"],
-      component: React.lazy(() => import("@/registry/default/ui/command")),
-      source: "",
-      files: ["registry/default/ui/command.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
-    "context-menu": {
-      name: "context-menu",
-      type: "components:ui",
-      registryDependencies: undefined,
-      component: React.lazy(() => import("@/registry/default/ui/context-menu")),
-      source: "",
-      files: ["registry/default/ui/context-menu.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
     "dialog": {
       name: "dialog",
       type: "components:ui",
@@ -177,17 +56,6 @@ export const Index: Record<string, any> = {
       component: React.lazy(() => import("@/registry/default/ui/dialog")),
       source: "",
       files: ["registry/default/ui/dialog.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
-    "drawer": {
-      name: "drawer",
-      type: "components:ui",
-      registryDependencies: undefined,
-      component: React.lazy(() => import("@/registry/default/ui/drawer")),
-      source: "",
-      files: ["registry/default/ui/drawer.tsx"],
       category: "undefined",
       subcategory: "undefined",
       chunks: []
@@ -203,28 +71,6 @@ export const Index: Record<string, any> = {
       subcategory: "undefined",
       chunks: []
     },
-    "form": {
-      name: "form",
-      type: "components:ui",
-      registryDependencies: ["button","label"],
-      component: React.lazy(() => import("@/registry/default/ui/form")),
-      source: "",
-      files: ["registry/default/ui/form.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
-    "hover-card": {
-      name: "hover-card",
-      type: "components:ui",
-      registryDependencies: undefined,
-      component: React.lazy(() => import("@/registry/default/ui/hover-card")),
-      source: "",
-      files: ["registry/default/ui/hover-card.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
     "input": {
       name: "input",
       type: "components:ui",
@@ -232,17 +78,6 @@ export const Index: Record<string, any> = {
       component: React.lazy(() => import("@/registry/default/ui/input")),
       source: "",
       files: ["registry/default/ui/input.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
-    "input-otp": {
-      name: "input-otp",
-      type: "components:ui",
-      registryDependencies: undefined,
-      component: React.lazy(() => import("@/registry/default/ui/input-otp")),
-      source: "",
-      files: ["registry/default/ui/input-otp.tsx"],
       category: "undefined",
       subcategory: "undefined",
       chunks: []
@@ -258,17 +93,6 @@ export const Index: Record<string, any> = {
       subcategory: "undefined",
       chunks: []
     },
-    "menubar": {
-      name: "menubar",
-      type: "components:ui",
-      registryDependencies: undefined,
-      component: React.lazy(() => import("@/registry/default/ui/menubar")),
-      source: "",
-      files: ["registry/default/ui/menubar.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
     "navigation-menu": {
       name: "navigation-menu",
       type: "components:ui",
@@ -276,17 +100,6 @@ export const Index: Record<string, any> = {
       component: React.lazy(() => import("@/registry/default/ui/navigation-menu")),
       source: "",
       files: ["registry/default/ui/navigation-menu.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
-    "pagination": {
-      name: "pagination",
-      type: "components:ui",
-      registryDependencies: ["button"],
-      component: React.lazy(() => import("@/registry/default/ui/pagination")),
-      source: "",
-      files: ["registry/default/ui/pagination.tsx"],
       category: "undefined",
       subcategory: "undefined",
       chunks: []
@@ -302,149 +115,6 @@ export const Index: Record<string, any> = {
       subcategory: "undefined",
       chunks: []
     },
-    "progress": {
-      name: "progress",
-      type: "components:ui",
-      registryDependencies: undefined,
-      component: React.lazy(() => import("@/registry/default/ui/progress")),
-      source: "",
-      files: ["registry/default/ui/progress.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
-    "radio-group": {
-      name: "radio-group",
-      type: "components:ui",
-      registryDependencies: undefined,
-      component: React.lazy(() => import("@/registry/default/ui/radio-group")),
-      source: "",
-      files: ["registry/default/ui/radio-group.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
-    "resizable": {
-      name: "resizable",
-      type: "components:ui",
-      registryDependencies: undefined,
-      component: React.lazy(() => import("@/registry/default/ui/resizable")),
-      source: "",
-      files: ["registry/default/ui/resizable.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
-    "scroll-area": {
-      name: "scroll-area",
-      type: "components:ui",
-      registryDependencies: undefined,
-      component: React.lazy(() => import("@/registry/default/ui/scroll-area")),
-      source: "",
-      files: ["registry/default/ui/scroll-area.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
-    "select": {
-      name: "select",
-      type: "components:ui",
-      registryDependencies: undefined,
-      component: React.lazy(() => import("@/registry/default/ui/select")),
-      source: "",
-      files: ["registry/default/ui/select.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
-    "separator": {
-      name: "separator",
-      type: "components:ui",
-      registryDependencies: undefined,
-      component: React.lazy(() => import("@/registry/default/ui/separator")),
-      source: "",
-      files: ["registry/default/ui/separator.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
-    "sheet": {
-      name: "sheet",
-      type: "components:ui",
-      registryDependencies: undefined,
-      component: React.lazy(() => import("@/registry/default/ui/sheet")),
-      source: "",
-      files: ["registry/default/ui/sheet.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
-    "skeleton": {
-      name: "skeleton",
-      type: "components:ui",
-      registryDependencies: undefined,
-      component: React.lazy(() => import("@/registry/default/ui/skeleton")),
-      source: "",
-      files: ["registry/default/ui/skeleton.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
-    "slider": {
-      name: "slider",
-      type: "components:ui",
-      registryDependencies: undefined,
-      component: React.lazy(() => import("@/registry/default/ui/slider")),
-      source: "",
-      files: ["registry/default/ui/slider.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
-    "sonner": {
-      name: "sonner",
-      type: "components:ui",
-      registryDependencies: undefined,
-      component: React.lazy(() => import("@/registry/default/ui/sonner")),
-      source: "",
-      files: ["registry/default/ui/sonner.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
-    "switch": {
-      name: "switch",
-      type: "components:ui",
-      registryDependencies: undefined,
-      component: React.lazy(() => import("@/registry/default/ui/switch")),
-      source: "",
-      files: ["registry/default/ui/switch.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
-    "table": {
-      name: "table",
-      type: "components:ui",
-      registryDependencies: undefined,
-      component: React.lazy(() => import("@/registry/default/ui/table")),
-      source: "",
-      files: ["registry/default/ui/table.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
-    "tabs": {
-      name: "tabs",
-      type: "components:ui",
-      registryDependencies: undefined,
-      component: React.lazy(() => import("@/registry/default/ui/tabs")),
-      source: "",
-      files: ["registry/default/ui/tabs.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
     "textarea": {
       name: "textarea",
       type: "components:ui",
@@ -456,49 +126,5 @@ export const Index: Record<string, any> = {
       subcategory: "undefined",
       chunks: []
     },
-    "toast": {
-      name: "toast",
-      type: "components:ui",
-      registryDependencies: undefined,
-      component: React.lazy(() => import("@/registry/default/ui/toast")),
-      source: "",
-      files: ["registry/default/ui/toast.tsx","registry/default/ui/use-toast.ts","registry/default/ui/toaster.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
-    "toggle": {
-      name: "toggle",
-      type: "components:ui",
-      registryDependencies: undefined,
-      component: React.lazy(() => import("@/registry/default/ui/toggle")),
-      source: "",
-      files: ["registry/default/ui/toggle.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
-    "toggle-group": {
-      name: "toggle-group",
-      type: "components:ui",
-      registryDependencies: ["toggle"],
-      component: React.lazy(() => import("@/registry/default/ui/toggle-group")),
-      source: "",
-      files: ["registry/default/ui/toggle-group.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    },
-    "tooltip": {
-      name: "tooltip",
-      type: "components:ui",
-      registryDependencies: undefined,
-      component: React.lazy(() => import("@/registry/default/ui/tooltip")),
-      source: "",
-      files: ["registry/default/ui/tooltip.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
-      chunks: []
-    }
-  }
+  },
 }
