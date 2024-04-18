@@ -1,17 +1,17 @@
 // @sts-nocheck
-import { existsSync, promises as fs, readFileSync } from "fs"
-import { tmpdir } from "os"
-import path, { basename } from "path"
-import template from "lodash.template"
-import { rimraf } from "rimraf"
-import { Project } from "ts-morph"
+import { existsSync, promises as fs, readFileSync } from "fs";
+import { tmpdir } from "os";
+import path, { basename } from "path";
+import template from "lodash.template";
+import { rimraf } from "rimraf";
+import { Project } from "ts-morph";
 
-import { colorMapping, colors } from "../registry/colors"
-import { registry } from "../registry/registry"
-import { Registry, registrySchema } from "../registry/schema"
-import { styles } from "../registry/styles"
+import { colorMapping, colors } from "../registry/colors";
+import { registry } from "../registry/registry";
+import { Registry, registrySchema } from "../registry/schema";
+import { styles } from "../registry/styles";
 
-const REGISTRY_PATH = path.join(process.cwd(), "public/registry")
+const REGISTRY_PATH = path.join(process.cwd(), "public/registry");
 
 // ----------------------------------------------------------------------------
 // Build __registry__/index.tsx.
@@ -23,18 +23,18 @@ async function buildRegistry(registry: Registry) {
 import * as React from "react"
 
 export const Index: Record<string, any> = {
-`
+`;
 
   for (const style of styles) {
-    index += `  "${style.name}": {`
+    index += `  "${style.name}": {`;
 
     // Build style index.
     for (const item of registry) {
       const resolveFiles = item.files.map(
-        (file) => `registry/${style.name}/${file}`
-      )
-      const type = item.type.split(":")[1]
-      let sourceFilename = ""
+        (file) => `registry/${style.name}/${file}`,
+      );
+      const type = item.type.split(":")[1];
+      let sourceFilename = "";
 
       index += `
     "${item.name}": {
@@ -48,32 +48,32 @@ export const Index: Record<string, any> = {
       files: [${resolveFiles.map((file) => `"${file}"`)}],
       category: "${item.category}",
       subcategory: "${item.subcategory}",
-    },`
+    },`;
     }
 
     index += `
-  },`
+  },`;
   }
 
   index += `
 }
-`
+`;
 
   // ----------------------------------------------------------------------------
   // Build registry/index.json.
   // ----------------------------------------------------------------------------
-  const names = registry.filter((item) => item.type === "components:ui")
-  const registryJson = JSON.stringify(names, null, 2)
-  rimraf.sync(path.join(REGISTRY_PATH, "index.json"))
+  const names = registry.filter((item) => item.type === "components:ui");
+  const registryJson = JSON.stringify(names, null, 2);
+  rimraf.sync(path.join(REGISTRY_PATH, "index.json"));
   await fs.writeFile(
     path.join(REGISTRY_PATH, "index.json"),
     registryJson,
-    "utf8"
-  )
+    "utf8",
+  );
 
   // Write style index.
-  rimraf.sync(path.join(process.cwd(), "__registry__/index.tsx"))
-  await fs.writeFile(path.join(process.cwd(), "__registry__/index.tsx"), index)
+  rimraf.sync(path.join(process.cwd(), "__registry__/index.tsx"));
+  await fs.writeFile(path.join(process.cwd(), "__registry__/index.tsx"), index);
 }
 
 // ----------------------------------------------------------------------------
@@ -81,69 +81,69 @@ export const Index: Record<string, any> = {
 // ----------------------------------------------------------------------------
 async function buildStyles(registry: Registry) {
   for (const style of styles) {
-    const targetPath = path.join(REGISTRY_PATH, "styles", style.name)
+    const targetPath = path.join(REGISTRY_PATH, "styles", style.name);
 
     // Create directory if it doesn't exist.
     if (!existsSync(targetPath)) {
-      await fs.mkdir(targetPath, { recursive: true })
+      await fs.mkdir(targetPath, { recursive: true });
     }
 
     for (const item of registry) {
       if (item.type !== "components:ui") {
-        continue
+        continue;
       }
 
       const files = item.files?.map((file) => {
         const content = readFileSync(
           path.join(process.cwd(), "registry", style.name, file),
-          "utf8"
-        )
+          "utf8",
+        );
 
         return {
           name: basename(file),
           content,
-        }
-      })
+        };
+      });
 
       const payload = {
         ...item,
         files,
-      }
+      };
 
       await fs.writeFile(
         path.join(targetPath, `${item.name}.json`),
         JSON.stringify(payload, null, 2),
-        "utf8"
-      )
+        "utf8",
+      );
     }
   }
 
   // ----------------------------------------------------------------------------
   // Build registry/styles/index.json.
   // ----------------------------------------------------------------------------
-  const stylesJson = JSON.stringify(styles, null, 2)
+  const stylesJson = JSON.stringify(styles, null, 2);
   await fs.writeFile(
     path.join(REGISTRY_PATH, "styles/index.json"),
     stylesJson,
-    "utf8"
-  )
+    "utf8",
+  );
 }
 
 // ----------------------------------------------------------------------------
 // Build registry/colors/index.json.
 // ----------------------------------------------------------------------------
 async function buildThemes() {
-  const colorsTargetPath = path.join(REGISTRY_PATH, "colors")
-  rimraf.sync(colorsTargetPath)
+  const colorsTargetPath = path.join(REGISTRY_PATH, "colors");
+  rimraf.sync(colorsTargetPath);
   if (!existsSync(colorsTargetPath)) {
-    await fs.mkdir(colorsTargetPath, { recursive: true })
+    await fs.mkdir(colorsTargetPath, { recursive: true });
   }
 
-  const colorsData: Record<string, any> = {}
+  const colorsData: Record<string, any> = {};
   for (const [color, value] of Object.entries(colors)) {
     if (typeof value === "string") {
-      colorsData[color] = value
-      continue
+      colorsData[color] = value;
+      continue;
     }
 
     if (Array.isArray(value)) {
@@ -152,10 +152,10 @@ async function buildThemes() {
         rgbChannel: item.rgb.replace(/^rgb\((\d+),(\d+),(\d+)\)$/, "$1 $2 $3"),
         hslChannel: item.hsl.replace(
           /^hsl\(([\d.]+),([\d.]+%),([\d.]+%)\)$/,
-          "$1 $2 $3"
+          "$1 $2 $3",
         ),
-      }))
-      continue
+      }));
+      continue;
     }
 
     if (typeof value === "object") {
@@ -164,18 +164,18 @@ async function buildThemes() {
         rgbChannel: value.rgb.replace(/^rgb\((\d+),(\d+),(\d+)\)$/, "$1 $2 $3"),
         hslChannel: value.hsl.replace(
           /^hsl\(([\d.]+),([\d.]+%),([\d.]+%)\)$/,
-          "$1 $2 $3"
+          "$1 $2 $3",
         ),
-      }
-      continue
+      };
+      continue;
     }
   }
 
   await fs.writeFile(
     path.join(colorsTargetPath, "index.json"),
     JSON.stringify(colorsData, null, 2),
-    "utf8"
-  )
+    "utf8",
+  );
 
   // ----------------------------------------------------------------------------
   // Build registry/colors/[base].json.
@@ -183,7 +183,7 @@ async function buildThemes() {
   const BASE_STYLES = `@tailwind base;
   @tailwind components;
   @tailwind utilities;
-  `
+  `;
 
   const BASE_STYLES_WITH_VARIABLES = `@tailwind base;
   @tailwind components;
@@ -260,64 +260,64 @@ async function buildThemes() {
     body {
       @apply bg-background text-foreground;
     }
-  }`
+  }`;
 
   for (const baseColor of ["zinc"]) {
     const base: Record<string, any> = {
       inlineColors: {},
       cssVars: {},
-    }
+    };
     for (const [mode, values] of Object.entries(colorMapping)) {
-      base["inlineColors"][mode] = {}
-      base["cssVars"][mode] = {}
+      base["inlineColors"][mode] = {};
+      base["cssVars"][mode] = {};
       for (const [key, value] of Object.entries(values)) {
         if (typeof value === "string") {
-          const resolvedColor = value.replace(/{{base}}-/g, `${baseColor}-`)
-          base["inlineColors"][mode][key] = resolvedColor
+          const resolvedColor = value.replace(/{{base}}-/g, `${baseColor}-`);
+          base["inlineColors"][mode][key] = resolvedColor;
 
-          const [resolvedBase, scale] = resolvedColor.split("-")
+          const [resolvedBase, scale] = resolvedColor.split("-");
           const color = scale
             ? colorsData[resolvedBase].find(
-                (item) => item.scale === parseInt(scale)
+                (item) => item.scale === parseInt(scale),
               )
-            : colorsData[resolvedBase]
+            : colorsData[resolvedBase];
           if (color) {
-            base["cssVars"][mode][key] = color.hex
+            base["cssVars"][mode][key] = color.hex;
           }
         }
       }
     }
 
     // Build css vars.
-    base["inlineColorsTemplate"] = template(BASE_STYLES)({})
+    base["inlineColorsTemplate"] = template(BASE_STYLES)({});
     base["cssVarsTemplate"] = template(BASE_STYLES_WITH_VARIABLES)({
       colors: base["cssVars"],
-    })
+    });
 
-    console.log(base)
+    console.log(base);
 
     await fs.writeFile(
       path.join(REGISTRY_PATH, `colors/${baseColor}.json`),
       JSON.stringify(base, null, 2),
-      "utf8"
-    )
+      "utf8",
+    );
   }
 }
 
 try {
-  const result = registrySchema.safeParse(registry)
+  const result = registrySchema.safeParse(registry);
 
   if (!result.success) {
-    console.error(result.error)
-    process.exit(1)
+    console.error(result.error);
+    process.exit(1);
   }
 
-  await buildRegistry(result.data)
-  await buildStyles(result.data)
-  await buildThemes()
+  await buildRegistry(result.data);
+  await buildStyles(result.data);
+  await buildThemes();
 
-  console.log("✅ Done!")
+  console.log("✅ Done!");
 } catch (error) {
-  console.error(error)
-  process.exit(1)
+  console.error(error);
+  process.exit(1);
 }

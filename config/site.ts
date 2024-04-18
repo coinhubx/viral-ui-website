@@ -1,4 +1,4 @@
-import { BASE_URL } from "@/lib/constants"
+import { BASE_URL } from "@/lib/constants";
 
 export const siteConfig = {
   name: "YazziUI",
@@ -10,6 +10,6 @@ export const siteConfig = {
     twitter: "https://twitter.com/ColeBlender",
     github: "https://github.com/ColeBlender/yazzi-ui",
   },
-}
+};
 
-export type SiteConfig = typeof siteConfig
+export type SiteConfig = typeof siteConfig;

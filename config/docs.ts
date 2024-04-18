@@ -1,9 +1,9 @@
-import { MainNavItem, SidebarNavItem } from "@/types/nav"
+import { MainNavItem, SidebarNavItem } from "@/types/nav";
 
 type DocsConfig = {
-  mainNav: MainNavItem[]
-  sidebarNav: SidebarNavItem[]
-}
+  mainNav: MainNavItem[];
+  sidebarNav: SidebarNavItem[];
+};
 
 export const docsConfig: DocsConfig = {
   mainNav: [
@@ -327,4 +327,4 @@ export const docsConfig: DocsConfig = {
       ],
     },
   ],
-}
+};

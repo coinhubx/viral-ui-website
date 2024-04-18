@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from "zod";
 
 export const registryEntrySchema = z.object({
   name: z.string(),
@@ -11,10 +11,10 @@ export const registryEntrySchema = z.object({
   type: z.enum(["components:ui"]),
   category: z.string().optional(),
   subcategory: z.string().optional(),
-})
+});
 
-export const registrySchema = z.array(registryEntrySchema)
+export const registrySchema = z.array(registryEntrySchema);
 
-export type RegistryEntry = z.infer<typeof registryEntrySchema>
+export type RegistryEntry = z.infer<typeof registryEntrySchema>;
 
-export type Registry = z.infer<typeof registrySchema>
+export type Registry = z.infer<typeof registrySchema>;
