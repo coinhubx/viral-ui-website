@@ -1,10 +1,10 @@
 {
-  "name": "www",
+  "name": "yazzi-ui-website",
   "version": "0.0.1",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev -p 3003",
+    "dev": "next dev -p 3000",
     "build": "contentlayer build && pnpm build:registry && next build",
     "build:registry": "tsx --tsconfig ./tsconfig.scripts.json ./scripts/build-registry.mts && prettier --loglevel silent --write \"registry/**/*.{ts,tsx,mdx}\" --cache",
     "seed:tasks": "tsx --tsconfig ./tsconfig.scripts.json ./app/(app)/examples/tasks/data/seed.ts",
@@ -80,6 +80,7 @@
     "sonner": "^1.2.3",
     "swr": "^2.2.5",
     "tailwind-merge": "^1.12.0",
+    "tailwindcss-animate": "^1.0.7",
     "ts-morph": "^22.0.0",
     "vaul": "^0.9.0",
     "zod": "^3.21.4"
