@@ -2,7 +2,7 @@
   "inlineColors": {
     "light": {
       "background": "white",
-      "foreground": "orange-500",
+      "foreground": "zinc-950",
       "card": "white",
       "card-foreground": "zinc-950",
       "popover": "white",
