@@ -382,7 +382,6 @@ async function buildThemes() {
   @layer base {
     :root {
       --background: <%- colors.light["background"] %>;
-      --foreground: <%- colors.light["foreground"] %>;
 
       --card: <%- colors.light["card"] %>;
       --card-foreground: <%- colors.light["card-foreground"] %>;
