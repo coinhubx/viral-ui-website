@@ -16,19 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <html lang="en" suppressHydrationWarning>
-        <head />
-        <body
-          className={cn(
-            "min-h-screen bg-background font-sans antialiased",
-            fontSans.variable
-          )}
-        >
-          <div>
-            <div className="relative flex min-h-screen flex-col bg-background">
-              {children}
-            </div>
-          </div>
+      <html lang="en">
+        <body className={cn("min-h-screen font-sans", fontSans.variable)}>
+          {children}
         </body>
       </html>
     </>

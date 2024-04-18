@@ -1513,7 +1513,7 @@ export const colors = {
 export const colorMapping = {
   light: {
     background: "white",
-    foreground: "red-500",
+    foreground: "{{base}}-950",
     card: "white",
     "card-foreground": "{{base}}-950",
     popover: "white",

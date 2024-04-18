@@ -4,4 +4,3 @@ node_modules
 build
 .contentlayer
 __registry__/index.tsx
-app/examples/mail/components/mail.tsx
