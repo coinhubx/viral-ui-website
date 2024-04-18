@@ -1,14 +1,4 @@
-type MainNavItem = {
-  title: string
-  href: string
-}
-
-type SidebarNavItem = {
-  title: string
-  items: SidebarNavItem[]
-  href?: string
-  label?: string
-}
+import { MainNavItem, SidebarNavItem } from "@/types/nav"
 
 type DocsConfig = {
   mainNav: MainNavItem[]
