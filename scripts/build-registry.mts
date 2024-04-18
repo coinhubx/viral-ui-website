@@ -1,11 +1,8 @@
 // @sts-nocheck
 import { existsSync, promises as fs, readFileSync } from "fs";
-import { tmpdir } from "os";
 import path, { basename } from "path";
 import template from "lodash.template";
 import { rimraf } from "rimraf";
-import { Project } from "ts-morph";
-
 import { colorMapping, colors } from "../registry/colors";
 import { registry } from "../registry/registry";
 import { Registry, registrySchema } from "../registry/schema";

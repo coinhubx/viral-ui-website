@@ -2,7 +2,7 @@
   "inlineColors": {
     "light": {
       "background": "white",
-      "foreground": "red-950",
+      "foreground": "zinc-950",
       "card": "white",
       "card-foreground": "zinc-950",
       "popover": "white",
@@ -46,7 +46,7 @@
   "cssVars": {
     "light": {
       "background": "#ffffff",
-      "foreground": "#450a0a",
+      "foreground": "#09090b",
       "card": "#ffffff",
       "card-foreground": "#09090b",
       "popover": "#ffffff",
@@ -88,5 +88,5 @@
     }
   },
   "inlineColorsTemplate": "@tailwind base;\n  @tailwind components;\n  @tailwind utilities;\n  ",
-  "cssVarsTemplate": "@tailwind base;\n  @tailwind components;\n  @tailwind utilities;\n\n  @layer base {\n    :root {\n      --background: #ffffff;\n      --foreground: #450a0a;\n\n      --card: #ffffff;\n      --card-foreground: #09090b;\n\n      --popover: #ffffff;\n      --popover-foreground: #09090b;\n\n      --primary: #18181b;\n      --primary-foreground: #fafafa;\n\n      --secondary: #f4f4f5;\n      --secondary-foreground: #18181b;\n\n      --muted: #f4f4f5;\n      --muted-foreground: #71717a;\n\n      --accent: #f4f4f5;\n      --accent-foreground: #18181b;\n\n      --destructive: #ef4444;\n      --destructive-foreground: #fafafa;\n\n      --border: #e4e4e7;\n      --input: #e4e4e7;\n      --ring: #09090b;\n\n      --radius: 0.5rem;\n    }\n\n    .dark {\n      --background: #09090b;\n      --foreground: #fafafa;\n\n      --card: #09090b;\n      --card-foreground: #fafafa;\n\n      --popover: #09090b;\n      --popover-foreground: #fafafa;\n\n      --primary: #fafafa;\n      --primary-foreground: #18181b;\n\n      --secondary: #27272a;\n      --secondary-foreground: #fafafa;\n\n      --muted: #27272a;\n      --muted-foreground: #a1a1aa;\n\n      --accent: #27272a;\n      --accent-foreground: #fafafa;\n\n      --destructive: #7f1d1d;\n      --destructive-foreground: #fafafa;\n\n      --border: #27272a;\n      --input: #27272a;\n      --ring: #d4d4d8;\n    }\n  }\n\n  @layer base {\n    * {\n      @apply border-border;\n    }\n    body {\n      @apply bg-background text-foreground;\n    }\n  }"
+  "cssVarsTemplate": "@tailwind base;\n  @tailwind components;\n  @tailwind utilities;\n\n  @layer base {\n    :root {\n      --background: #ffffff;\n      --foreground: #09090b;\n\n      --card: #ffffff;\n      --card-foreground: #09090b;\n\n      --popover: #ffffff;\n      --popover-foreground: #09090b;\n\n      --primary: #18181b;\n      --primary-foreground: #fafafa;\n\n      --secondary: #f4f4f5;\n      --secondary-foreground: #18181b;\n\n      --muted: #f4f4f5;\n      --muted-foreground: #71717a;\n\n      --accent: #f4f4f5;\n      --accent-foreground: #18181b;\n\n      --destructive: #ef4444;\n      --destructive-foreground: #fafafa;\n\n      --border: #e4e4e7;\n      --input: #e4e4e7;\n      --ring: #09090b;\n\n      --radius: 0.5rem;\n    }\n\n    .dark {\n      --background: #09090b;\n      --foreground: #fafafa;\n\n      --card: #09090b;\n      --card-foreground: #fafafa;\n\n      --popover: #09090b;\n      --popover-foreground: #fafafa;\n\n      --primary: #fafafa;\n      --primary-foreground: #18181b;\n\n      --secondary: #27272a;\n      --secondary-foreground: #fafafa;\n\n      --muted: #27272a;\n      --muted-foreground: #a1a1aa;\n\n      --accent: #27272a;\n      --accent-foreground: #fafafa;\n\n      --destructive: #7f1d1d;\n      --destructive-foreground: #fafafa;\n\n      --border: #27272a;\n      --input: #27272a;\n      --ring: #d4d4d8;\n    }\n  }\n\n  @layer base {\n    * {\n      @apply border-border;\n    }\n    body {\n      @apply bg-background text-foreground;\n    }\n  }"
 }
