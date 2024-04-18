@@ -282,7 +282,7 @@ async function buildThemes() {
               )
             : colorsData[resolvedBase]
           if (color) {
-            base["cssVars"][mode][key] = color.hslChannel
+            base["cssVars"][mode][key] = color.hex
           }
         }
       }
@@ -291,7 +291,7 @@ async function buildThemes() {
     // Build css vars.
     base["inlineColorsTemplate"] = template(BASE_STYLES)({})
     base["cssVarsTemplate"] = template(BASE_STYLES_WITH_VARIABLES)({
-      colors: base["inlineColors"],
+      colors: base["cssVars"],
     })
 
     console.log(base)
