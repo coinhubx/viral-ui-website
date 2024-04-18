@@ -14,7 +14,6 @@ export const Index: Record<string, any> = {
       files: ["registry/default/ui/alert.tsx"],
       category: "undefined",
       subcategory: "undefined",
-      chunks: []
     },
     "alert-dialog": {
       name: "alert-dialog",
@@ -25,7 +24,6 @@ export const Index: Record<string, any> = {
       files: ["registry/default/ui/alert-dialog.tsx"],
       category: "undefined",
       subcategory: "undefined",
-      chunks: []
     },
     "avatar": {
       name: "avatar",
@@ -36,7 +34,6 @@ export const Index: Record<string, any> = {
       files: ["registry/default/ui/avatar.tsx"],
       category: "undefined",
       subcategory: "undefined",
-      chunks: []
     },
     "button": {
       name: "button",
@@ -47,7 +44,6 @@ export const Index: Record<string, any> = {
       files: ["registry/default/ui/button.tsx"],
       category: "undefined",
       subcategory: "undefined",
-      chunks: []
     },
     "dialog": {
       name: "dialog",
@@ -58,7 +54,6 @@ export const Index: Record<string, any> = {
       files: ["registry/default/ui/dialog.tsx"],
       category: "undefined",
       subcategory: "undefined",
-      chunks: []
     },
     "dropdown-menu": {
       name: "dropdown-menu",
@@ -69,7 +64,6 @@ export const Index: Record<string, any> = {
       files: ["registry/default/ui/dropdown-menu.tsx"],
       category: "undefined",
       subcategory: "undefined",
-      chunks: []
     },
     "input": {
       name: "input",
@@ -80,7 +74,6 @@ export const Index: Record<string, any> = {
       files: ["registry/default/ui/input.tsx"],
       category: "undefined",
       subcategory: "undefined",
-      chunks: []
     },
     "label": {
       name: "label",
@@ -91,7 +84,6 @@ export const Index: Record<string, any> = {
       files: ["registry/default/ui/label.tsx"],
       category: "undefined",
       subcategory: "undefined",
-      chunks: []
     },
     "navigation-menu": {
       name: "navigation-menu",
@@ -102,7 +94,6 @@ export const Index: Record<string, any> = {
       files: ["registry/default/ui/navigation-menu.tsx"],
       category: "undefined",
       subcategory: "undefined",
-      chunks: []
     },
     "popover": {
       name: "popover",
@@ -113,7 +104,6 @@ export const Index: Record<string, any> = {
       files: ["registry/default/ui/popover.tsx"],
       category: "undefined",
       subcategory: "undefined",
-      chunks: []
     },
     "textarea": {
       name: "textarea",
@@ -124,7 +114,6 @@ export const Index: Record<string, any> = {
       files: ["registry/default/ui/textarea.tsx"],
       category: "undefined",
       subcategory: "undefined",
-      chunks: []
     },
   },
 }
