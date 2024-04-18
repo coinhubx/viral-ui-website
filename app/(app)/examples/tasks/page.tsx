@@ -20,7 +20,7 @@ async function getTasks() {
     path.join(process.cwd(), "app/(app)/examples/tasks/data/tasks.json")
   )
 
-  const tasks = JSON.parse(data.toString())
+  const tasks = JSON.parse(data.toString()) || []
 
   return z.array(taskSchema).parse(tasks)
 }
