@@ -1,11 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/eslintrc",
   "root": true,
-  "extends": [
-    "next/core-web-vitals",
-    "turbo",
-    "plugin:tailwindcss/recommended"
-  ],
+  "extends": ["next/core-web-vitals", "plugin:tailwindcss/recommended"],
   "plugins": ["tailwindcss"],
   "rules": {
     "@next/next/no-html-link-for-pages": "off",
