@@ -54,38 +54,6 @@ export function rehypeComponent() {
           // For now a simple regex should do.
           source = source.replaceAll(`@/registry/`, "@/components/");
           source = source.replaceAll("export default", "export");
-
-          // Add code as children so that rehype can take over at build time.
-          // node.children?.push(
-          //   u("element", {
-          //     tagName: "pre",
-          //     properties: {
-          //       __src__: src,
-          //       __style__: style.name,
-          //     },
-          //     attributes: [
-          //       {
-          //         name: "styleName",
-          //         type: "mdxJsxAttribute",
-          //         value: style.name,
-          //       },
-          //     ],
-          //     children: [
-          //       u("element", {
-          //         tagName: "code",
-          //         properties: {
-          //           className: ["language-tsx"],
-          //         },
-          //         children: [
-          //           {
-          //             type: "text",
-          //             value: source,
-          //           },
-          //         ],
-          //       }),
-          //     ],
-          //   }),
-          // );
         } catch (error) {
           console.error(error);
         }
