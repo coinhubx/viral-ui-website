@@ -6,7 +6,6 @@ import { rimraf } from "rimraf";
 import { colorMapping, colors } from "../src/registry/colors";
 import { registry } from "../src/registry/registry";
 import { Registry, registrySchema } from "../src/registry/schema";
-import { styles } from "../src/registry/styles";
 
 const REGISTRY_PATH = path.join(process.cwd(), "public/registry");
 
@@ -22,34 +21,23 @@ import * as React from "react"
 export const Index: Record<string, any> = {
 `;
 
-  for (const style of styles) {
-    index += `  "${style.name}": {`;
+  // Build style index.
+  for (const item of registry) {
+    const resolveFiles = item.files.map((file) => `registry/${file}`);
+    const type = item.type.split(":")[1];
+    let sourceFilename = "";
 
-    // Build style index.
-    for (const item of registry) {
-      const resolveFiles = item.files.map(
-        (file) => `registry/${style.name}/${file}`,
-      );
-      const type = item.type.split(":")[1];
-      let sourceFilename = "";
-
-      index += `
+    index += `
     "${item.name}": {
       name: "${item.name}",
       type: "${item.type}",
       registryDependencies: ${JSON.stringify(item.registryDependencies)},
-      component: React.lazy(() => import("@/registry/${style.name}/${type}/${
-        item.name
-      }")),
+      component: React.lazy(() => import("@/registry/${type}/${item.name}")),
       source: "${sourceFilename}",
       files: [${resolveFiles.map((file) => `"${file}"`)}],
       category: "${item.category}",
       subcategory: "${item.subcategory}",
     },`;
-    }
-
-    index += `
-  },`;
   }
 
   index += `
@@ -77,53 +65,41 @@ export const Index: Record<string, any> = {
 // Build src/registry/styles/[style]/[name].json.
 // ----------------------------------------------------------------------------
 async function buildStyles(registry: Registry) {
-  for (const style of styles) {
-    const targetPath = path.join(REGISTRY_PATH, "styles", style.name);
+  const targetPath = path.join(REGISTRY_PATH, "ui");
 
-    // Create directory if it doesn't exist.
-    if (!existsSync(targetPath)) {
-      await fs.mkdir(targetPath, { recursive: true });
-    }
-
-    for (const item of registry) {
-      if (item.type !== "components:ui") {
-        continue;
-      }
-
-      const files = item.files?.map((file) => {
-        const content = readFileSync(
-          path.join(process.cwd(), "src/registry", style.name, file),
-          "utf8",
-        );
-
-        return {
-          name: basename(file),
-          content,
-        };
-      });
-
-      const payload = {
-        ...item,
-        files,
-      };
-
-      await fs.writeFile(
-        path.join(targetPath, `${item.name}.json`),
-        JSON.stringify(payload, null, 2),
-        "utf8",
-      );
-    }
+  // Create directory if it doesn't exist.
+  if (!existsSync(targetPath)) {
+    await fs.mkdir(targetPath, { recursive: true });
   }
 
-  // ----------------------------------------------------------------------------
-  // Build src/registry/styles/index.json.
-  // ----------------------------------------------------------------------------
-  const stylesJson = JSON.stringify(styles, null, 2);
-  await fs.writeFile(
-    path.join(REGISTRY_PATH, "styles/index.json"),
-    stylesJson,
-    "utf8",
-  );
+  for (const item of registry) {
+    if (item.type !== "components:ui") {
+      continue;
+    }
+
+    const files = item.files?.map((file) => {
+      const content = readFileSync(
+        path.join(process.cwd(), "src/registry", file),
+        "utf8",
+      );
+
+      return {
+        name: basename(file),
+        content,
+      };
+    });
+
+    const payload = {
+      ...item,
+      files,
+    };
+
+    await fs.writeFile(
+      path.join(targetPath, `${item.name}.json`),
+      JSON.stringify(payload, null, 2),
+      "utf8",
+    );
+  }
 }
 
 // ----------------------------------------------------------------------------
@@ -183,81 +159,81 @@ async function buildThemes() {
   `;
 
   const BASE_STYLES_WITH_VARIABLES = `@tailwind base;
-  @tailwind components;
-  @tailwind utilities;
+@tailwind components;
+@tailwind utilities;
 
-  @layer base {
-    :root {
-      --background: <%- colors.light["background"] %>;
-      --foreground: <%- colors.light["foreground"] %>;
+@layer base {
+  :root {
+    --background: <%- colors.light["background"] %>;
+    --foreground: <%- colors.light["foreground"] %>;
 
-      --card: <%- colors.light["card"] %>;
-      --card-foreground: <%- colors.light["card-foreground"] %>;
+    --card: <%- colors.light["card"] %>;
+    --card-foreground: <%- colors.light["card-foreground"] %>;
 
-      --popover: <%- colors.light["popover"] %>;
-      --popover-foreground: <%- colors.light["popover-foreground"] %>;
+    --popover: <%- colors.light["popover"] %>;
+    --popover-foreground: <%- colors.light["popover-foreground"] %>;
 
-      --primary: <%- colors.light["primary"] %>;
-      --primary-foreground: <%- colors.light["primary-foreground"] %>;
+    --primary: <%- colors.light["primary"] %>;
+    --primary-foreground: <%- colors.light["primary-foreground"] %>;
 
-      --secondary: <%- colors.light["secondary"] %>;
-      --secondary-foreground: <%- colors.light["secondary-foreground"] %>;
+    --secondary: <%- colors.light["secondary"] %>;
+    --secondary-foreground: <%- colors.light["secondary-foreground"] %>;
 
-      --muted: <%- colors.light["muted"] %>;
-      --muted-foreground: <%- colors.light["muted-foreground"] %>;
+    --muted: <%- colors.light["muted"] %>;
+    --muted-foreground: <%- colors.light["muted-foreground"] %>;
 
-      --accent: <%- colors.light["accent"] %>;
-      --accent-foreground: <%- colors.light["accent-foreground"] %>;
+    --accent: <%- colors.light["accent"] %>;
+    --accent-foreground: <%- colors.light["accent-foreground"] %>;
 
-      --destructive: <%- colors.light["destructive"] %>;
-      --destructive-foreground: <%- colors.light["destructive-foreground"] %>;
+    --destructive: <%- colors.light["destructive"] %>;
+    --destructive-foreground: <%- colors.light["destructive-foreground"] %>;
 
-      --border: <%- colors.light["border"] %>;
-      --input: <%- colors.light["input"] %>;
-      --ring: <%- colors.light["ring"] %>;
+    --border: <%- colors.light["border"] %>;
+    --input: <%- colors.light["input"] %>;
+    --ring: <%- colors.light["ring"] %>;
 
-      --radius: 0.5rem;
-    }
-
-    .dark {
-      --background: <%- colors.dark["background"] %>;
-      --foreground: <%- colors.dark["foreground"] %>;
-
-      --card: <%- colors.dark["card"] %>;
-      --card-foreground: <%- colors.dark["card-foreground"] %>;
-
-      --popover: <%- colors.dark["popover"] %>;
-      --popover-foreground: <%- colors.dark["popover-foreground"] %>;
-
-      --primary: <%- colors.dark["primary"] %>;
-      --primary-foreground: <%- colors.dark["primary-foreground"] %>;
-
-      --secondary: <%- colors.dark["secondary"] %>;
-      --secondary-foreground: <%- colors.dark["secondary-foreground"] %>;
-
-      --muted: <%- colors.dark["muted"] %>;
-      --muted-foreground: <%- colors.dark["muted-foreground"] %>;
-
-      --accent: <%- colors.dark["accent"] %>;
-      --accent-foreground: <%- colors.dark["accent-foreground"] %>;
-
-      --destructive: <%- colors.dark["destructive"] %>;
-      --destructive-foreground: <%- colors.dark["destructive-foreground"] %>;
-
-      --border: <%- colors.dark["border"] %>;
-      --input: <%- colors.dark["input"] %>;
-      --ring: <%- colors.dark["ring"] %>;
-    }
+    --radius: 0.5rem;
   }
 
-  @layer base {
-    * {
-      @apply border-border;
-    }
-    body {
-      @apply bg-background text-foreground;
-    }
-  }`;
+  .dark {
+    --background: <%- colors.dark["background"] %>;
+    --foreground: <%- colors.dark["foreground"] %>;
+
+    --card: <%- colors.dark["card"] %>;
+    --card-foreground: <%- colors.dark["card-foreground"] %>;
+
+    --popover: <%- colors.dark["popover"] %>;
+    --popover-foreground: <%- colors.dark["popover-foreground"] %>;
+
+    --primary: <%- colors.dark["primary"] %>;
+    --primary-foreground: <%- colors.dark["primary-foreground"] %>;
+
+    --secondary: <%- colors.dark["secondary"] %>;
+    --secondary-foreground: <%- colors.dark["secondary-foreground"] %>;
+
+    --muted: <%- colors.dark["muted"] %>;
+    --muted-foreground: <%- colors.dark["muted-foreground"] %>;
+
+    --accent: <%- colors.dark["accent"] %>;
+    --accent-foreground: <%- colors.dark["accent-foreground"] %>;
+
+    --destructive: <%- colors.dark["destructive"] %>;
+    --destructive-foreground: <%- colors.dark["destructive-foreground"] %>;
+
+    --border: <%- colors.dark["border"] %>;
+    --input: <%- colors.dark["input"] %>;
+    --ring: <%- colors.dark["ring"] %>;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}`;
 
   for (const baseColor of ["zinc"]) {
     const base: Record<string, any> = {

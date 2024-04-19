@@ -27,7 +27,7 @@
     "paths": {
       "@/*": ["./src/*"],
       "contentlayer/generated": ["./.contentlayer/generated"],
-      "@components/*": ["./src/registry/default/ui/*"]
+      "@components/*": ["./src/registry/ui/*"]
     },
     "plugins": [
       {
