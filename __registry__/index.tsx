@@ -7,34 +7,26 @@ export const Index: Record<string, any> = {
 
     "button": {
       name: "button",
-      type: "components:ui",
       registryDependencies: undefined,
       component: React.lazy(() => import("@/registry/ui/button")),
-      source: "",
       files: ["registry/ui/button.tsx"],
     },
     "input": {
       name: "input",
-      type: "components:ui",
       registryDependencies: undefined,
       component: React.lazy(() => import("@/registry/ui/input")),
-      source: "",
       files: ["registry/ui/input.tsx"],
     },
     "label": {
       name: "label",
-      type: "components:ui",
       registryDependencies: undefined,
       component: React.lazy(() => import("@/registry/ui/label")),
-      source: "",
       files: ["registry/ui/label.tsx"],
     },
     "textarea": {
       name: "textarea",
-      type: "components:ui",
       registryDependencies: undefined,
       component: React.lazy(() => import("@/registry/ui/textarea")),
-      source: "",
       files: ["registry/ui/textarea.tsx"],
     },
 }

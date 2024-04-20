@@ -3,28 +3,24 @@
     "name": "button",
     "files": [
       "ui/button.tsx"
-    ],
-    "type": "components:ui"
+    ]
   },
   {
     "name": "input",
     "files": [
       "ui/input.tsx"
-    ],
-    "type": "components:ui"
+    ]
   },
   {
     "name": "label",
     "files": [
       "ui/label.tsx"
-    ],
-    "type": "components:ui"
+    ]
   },
   {
     "name": "textarea",
     "files": [
       "ui/textarea.tsx"
-    ],
-    "type": "components:ui"
+    ]
   }
 ]
