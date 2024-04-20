@@ -16,5 +16,6 @@ const Textarea = forwardRef<
     />
   );
 });
+Textarea.displayName = "Textarea";
 
 export { Textarea };

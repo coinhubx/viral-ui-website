@@ -39,6 +39,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     );
   },
 );
+Button.displayName = "Button";
 
 type LinkButtonProps = AnchorHTMLAttributes<HTMLAnchorElement> &
   VariantProps<typeof buttonVariants> & { href: string };
@@ -55,5 +56,6 @@ const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(
     );
   },
 );
+LinkButton.displayName = "LinkButton";
 
 export { Button, LinkButton, buttonVariants };
