@@ -3,7 +3,7 @@
   "files": [
     {
       "name": "textarea.tsx",
-      "content": "import { cn } from \"@/lib/utils\";\nimport { forwardRef, TextareaHTMLAttributes } from \"react\";\n\nconst Textarea = forwardRef<\n  HTMLTextAreaElement,\n  TextareaHTMLAttributes<HTMLTextAreaElement>\n>(({ className, ...props }, ref) => {\n  return (\n    <textarea\n      {...props}\n      ref={ref}\n      className={cn(\n        \"flex min-h-20 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50\",\n        className,\n      )}\n    />\n  );\n});\n\nexport { Textarea };\n"
+      "content": "import { cn } from \"@/lib/utils\";\nimport { forwardRef, TextareaHTMLAttributes } from \"react\";\n\nconst Textarea = forwardRef<\n  HTMLTextAreaElement,\n  TextareaHTMLAttributes<HTMLTextAreaElement>\n>(({ className, ...props }, ref) => {\n  return (\n    <textarea\n      {...props}\n      ref={ref}\n      className={cn(\n        \"flex min-h-20 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50\",\n        className,\n      )}\n    />\n  );\n});\nTextarea.displayName = \"Textarea\";\n\nexport { Textarea };\n"
     }
   ],
   "type": "components:ui"

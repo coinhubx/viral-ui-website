@@ -3,7 +3,7 @@
   "files": [
     {
       "name": "input.tsx",
-      "content": "import { cn } from \"@/lib/utils\";\nimport { forwardRef, InputHTMLAttributes } from \"react\";\n\nconst Input = forwardRef<\n  HTMLInputElement,\n  InputHTMLAttributes<HTMLInputElement>\n>(({ className, ...props }, ref) => {\n  return (\n    <input\n      {...props}\n      ref={ref}\n      className={cn(\n        \"flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50\",\n        className,\n      )}\n    />\n  );\n});\n\nexport { Input };\n"
+      "content": "import { cn } from \"@/lib/utils\";\nimport { forwardRef, InputHTMLAttributes } from \"react\";\n\nconst Input = forwardRef<\n  HTMLInputElement,\n  InputHTMLAttributes<HTMLInputElement>\n>(({ className, ...props }, ref) => {\n  return (\n    <input\n      {...props}\n      ref={ref}\n      className={cn(\n        \"flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50\",\n        className,\n      )}\n    />\n  );\n});\nInput.displayName = \"Input\";\n\nexport { Input };\n"
     }
   ],
   "type": "components:ui"

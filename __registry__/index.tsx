@@ -12,8 +12,6 @@ export const Index: Record<string, any> = {
       component: React.lazy(() => import("@/registry/ui/button")),
       source: "",
       files: ["registry/ui/button.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
     },
     "input": {
       name: "input",
@@ -22,8 +20,6 @@ export const Index: Record<string, any> = {
       component: React.lazy(() => import("@/registry/ui/input")),
       source: "",
       files: ["registry/ui/input.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
     },
     "label": {
       name: "label",
@@ -32,8 +28,6 @@ export const Index: Record<string, any> = {
       component: React.lazy(() => import("@/registry/ui/label")),
       source: "",
       files: ["registry/ui/label.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
     },
     "textarea": {
       name: "textarea",
@@ -42,7 +36,5 @@ export const Index: Record<string, any> = {
       component: React.lazy(() => import("@/registry/ui/textarea")),
       source: "",
       files: ["registry/ui/textarea.tsx"],
-      category: "undefined",
-      subcategory: "undefined",
     },
 }

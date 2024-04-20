@@ -35,8 +35,6 @@ export const Index: Record<string, any> = {
       component: React.lazy(() => import("@/registry/${type}/${item.name}")),
       source: "${sourceFilename}",
       files: [${resolveFiles.map((file) => `"${file}"`)}],
-      category: "${item.category}",
-      subcategory: "${item.subcategory}",
     },`;
   }
 

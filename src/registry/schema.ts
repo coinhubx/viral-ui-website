@@ -9,8 +9,6 @@ const registryEntrySchema = z.object({
   files: z.array(z.string()),
   source: z.string().optional(),
   type: z.enum(["components:ui"]),
-  category: z.string().optional(),
-  subcategory: z.string().optional(),
 });
 
 export const registrySchema = z.array(registryEntrySchema);
