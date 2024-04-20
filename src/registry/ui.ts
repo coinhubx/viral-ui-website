@@ -2,30 +2,9 @@ import { Registry } from "@/registry/schema";
 
 export const ui: Registry = [
   {
-    name: "alert-dialog",
-    type: "components:ui",
-    registryDependencies: ["button"],
-    files: ["ui/alert-dialog.tsx"],
-  },
-  {
-    name: "avatar",
-    type: "components:ui",
-    files: ["ui/avatar.tsx"],
-  },
-  {
     name: "button",
     type: "components:ui",
     files: ["ui/button.tsx"],
-  },
-  {
-    name: "dialog",
-    type: "components:ui",
-    files: ["ui/dialog.tsx"],
-  },
-  {
-    name: "dropdown-menu",
-    type: "components:ui",
-    files: ["ui/dropdown-menu.tsx"],
   },
   {
     name: "input",
@@ -36,16 +15,6 @@ export const ui: Registry = [
     name: "label",
     type: "components:ui",
     files: ["ui/label.tsx"],
-  },
-  {
-    name: "navigation-menu",
-    type: "components:ui",
-    files: ["ui/navigation-menu.tsx"],
-  },
-  {
-    name: "popover",
-    type: "components:ui",
-    files: ["ui/popover.tsx"],
   },
   {
     name: "textarea",

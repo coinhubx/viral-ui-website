@@ -35,9 +35,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
         ref={ref}
         className={cn(buttonVariants({ variant, className }))}
-      >
-        {props.children}
-      </button>
+      />
     );
   },
 );
@@ -53,9 +51,7 @@ const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(
         ref={ref}
         href={href}
         className={cn(buttonVariants({ variant, className }))}
-      >
-        {props.children}
-      </Link>
+      />
     );
   },
 );
