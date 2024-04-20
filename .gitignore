@@ -33,6 +33,5 @@ yarn-error.log*
 .env.production.local
 
 .turbo
-.contentlayer
 tsconfig.tsbuildinfo
 next-env.d.ts
