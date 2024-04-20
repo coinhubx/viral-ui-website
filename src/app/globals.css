@@ -29,7 +29,7 @@
     --destructive-foreground: #fafafa;
 
     --border: #27272a;
-    --input: #27272a;
+    --input: #84848a;
     --ring: #d4d4d8;
 
     --radius: 0.5rem;
@@ -43,4 +43,8 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.trans {
+  @apply transition-all duration-200 ease-in-out;
 }

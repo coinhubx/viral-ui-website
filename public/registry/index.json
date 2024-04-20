@@ -8,9 +8,6 @@
   },
   {
     "name": "alert-dialog",
-    "dependencies": [
-      "@radix-ui/react-alert-dialog"
-    ],
     "registryDependencies": [
       "button"
     ],
@@ -21,9 +18,6 @@
   },
   {
     "name": "avatar",
-    "dependencies": [
-      "@radix-ui/react-avatar"
-    ],
     "files": [
       "ui/avatar.tsx"
     ],
@@ -31,9 +25,6 @@
   },
   {
     "name": "button",
-    "dependencies": [
-      "@radix-ui/react-slot"
-    ],
     "files": [
       "ui/button.tsx"
     ],
@@ -41,9 +32,6 @@
   },
   {
     "name": "dialog",
-    "dependencies": [
-      "@radix-ui/react-dialog"
-    ],
     "files": [
       "ui/dialog.tsx"
     ],
@@ -51,9 +39,6 @@
   },
   {
     "name": "dropdown-menu",
-    "dependencies": [
-      "@radix-ui/react-dropdown-menu"
-    ],
     "files": [
       "ui/dropdown-menu.tsx"
     ],
@@ -68,9 +53,6 @@
   },
   {
     "name": "label",
-    "dependencies": [
-      "@radix-ui/react-label"
-    ],
     "files": [
       "ui/label.tsx"
     ],
@@ -78,9 +60,6 @@
   },
   {
     "name": "navigation-menu",
-    "dependencies": [
-      "@radix-ui/react-navigation-menu"
-    ],
     "files": [
       "ui/navigation-menu.tsx"
     ],
@@ -88,9 +67,6 @@
   },
   {
     "name": "popover",
-    "dependencies": [
-      "@radix-ui/react-popover"
-    ],
     "files": [
       "ui/popover.tsx"
     ],

@@ -233,6 +233,10 @@ async function buildThemes() {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.trans {
+  @apply transition-all duration-200 ease-in-out;
 }`;
 
   for (const baseColor of ["zinc"]) {
