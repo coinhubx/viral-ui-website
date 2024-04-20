@@ -1,46 +1,8 @@
 [
   {
-    "name": "alert",
-    "files": [
-      "ui/alert.tsx"
-    ],
-    "type": "components:ui"
-  },
-  {
-    "name": "alert-dialog",
-    "registryDependencies": [
-      "button"
-    ],
-    "files": [
-      "ui/alert-dialog.tsx"
-    ],
-    "type": "components:ui"
-  },
-  {
-    "name": "avatar",
-    "files": [
-      "ui/avatar.tsx"
-    ],
-    "type": "components:ui"
-  },
-  {
     "name": "button",
     "files": [
       "ui/button.tsx"
-    ],
-    "type": "components:ui"
-  },
-  {
-    "name": "dialog",
-    "files": [
-      "ui/dialog.tsx"
-    ],
-    "type": "components:ui"
-  },
-  {
-    "name": "dropdown-menu",
-    "files": [
-      "ui/dropdown-menu.tsx"
     ],
     "type": "components:ui"
   },
@@ -55,20 +17,6 @@
     "name": "label",
     "files": [
       "ui/label.tsx"
-    ],
-    "type": "components:ui"
-  },
-  {
-    "name": "navigation-menu",
-    "files": [
-      "ui/navigation-menu.tsx"
-    ],
-    "type": "components:ui"
-  },
-  {
-    "name": "popover",
-    "files": [
-      "ui/popover.tsx"
     ],
     "type": "components:ui"
   },
