@@ -1,8 +1,8 @@
-import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { AnchorHTMLAttributes, ButtonHTMLAttributes, forwardRef } from "react";
 
 const buttonVariants = cva(
   "trans inline-flex h-10 items-center justify-center rounded-md px-4 text-sm font-medium disabled:pointer-events-none disabled:opacity-50",
@@ -25,10 +25,10 @@ const buttonVariants = cva(
   },
 );
 
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
   VariantProps<typeof buttonVariants>;
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, ...props }, ref) => {
     return (
       <button
@@ -42,10 +42,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   },
 );
 
-type LinkButtonProps = React.AnchorHTMLAttributes<HTMLAnchorElement> &
+type LinkButtonProps = AnchorHTMLAttributes<HTMLAnchorElement> &
   VariantProps<typeof buttonVariants> & { href: string };
 
-const LinkButton = React.forwardRef<HTMLAnchorElement, LinkButtonProps>(
+const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(
   ({ className, variant, href, ...props }, ref) => {
     return (
       <Link

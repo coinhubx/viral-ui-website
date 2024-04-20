@@ -1,9 +1,11 @@
 "use client";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar";
 import { Button, LinkButton } from "@/registry/ui/button";
 import { Input } from "@/registry/ui/input";
 import { Label } from "@/registry/ui/label";
 import { Textarea } from "@/registry/ui/textarea";
+import Image from "next/image";
 import { useRef } from "react";
 
 function HomePage() {
@@ -31,6 +33,17 @@ function HomePage() {
         <Button ref={ref}>Bitch Aass motherfucker you</Button>
 
         <Textarea />
+
+        <Avatar>
+          <AvatarImage
+            // src="https://github.com/ColeBlender.png"
+            src=""
+            width={100}
+            height={100}
+            alt="dank"
+          />
+          <AvatarFallback>Ass</AvatarFallback>
+        </Avatar>
       </div>
     </main>
   );
