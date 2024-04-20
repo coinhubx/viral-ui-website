@@ -24,16 +24,12 @@ export const Index: Record<string, any> = {
   // Build style index.
   for (const item of registry) {
     const resolveFiles = item.files.map((file) => `registry/${file}`);
-    const type = item.type.split(":")[1];
-    let sourceFilename = "";
 
     index += `
     "${item.name}": {
       name: "${item.name}",
-      type: "${item.type}",
       registryDependencies: ${JSON.stringify(item.registryDependencies)},
-      component: React.lazy(() => import("@/registry/${type}/${item.name}")),
-      source: "${sourceFilename}",
+      component: React.lazy(() => import("@/registry/ui/${item.name}")),
       files: [${resolveFiles.map((file) => `"${file}"`)}],
     },`;
   }
@@ -45,7 +41,7 @@ export const Index: Record<string, any> = {
   // ----------------------------------------------------------------------------
   // Build src/registry/index.json.
   // ----------------------------------------------------------------------------
-  const names = registry.filter((item) => item.type === "components:ui");
+  const names = registry;
   const registryJson = JSON.stringify(names, null, 2);
   rimraf.sync(path.join(REGISTRY_PATH, "index.json"));
   await fs.writeFile(
@@ -71,10 +67,6 @@ async function buildStyles(registry: Registry) {
   }
 
   for (const item of registry) {
-    if (item.type !== "components:ui") {
-      continue;
-    }
-
     const files = item.files?.map((file) => {
       const content = readFileSync(
         path.join(process.cwd(), "src/registry", file),
