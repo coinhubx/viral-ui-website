@@ -2,7 +2,7 @@ import "./globals.css";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "YazziUI",
+  title: "CloutUI",
   description: "UI Components for Next.js ",
 };
 

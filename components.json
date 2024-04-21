@@ -1,5 +1,5 @@
 {
-  "$schema": "https://yazzi-ui.vercel.app/schema.json",
+  "$schema": "https://clout-ui.vercel.app/schema.json",
   "rsc": true,
   "tsx": true,
   "tailwind": {
