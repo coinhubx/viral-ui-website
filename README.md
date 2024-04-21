@@ -1,4 +1,4 @@
-# CloutUI Website
+# ViralUI Website
 
 - Change components in ./src/registry/default/ui
   - If add component then need to add to ./src/registry/ui.ts

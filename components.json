@@ -1,5 +1,5 @@
 {
-  "$schema": "https://clout-ui.vercel.app/schema.json",
+  "$schema": "https://viral-ui.vercel.app/schema.json",
   "rsc": true,
   "tsx": true,
   "tailwind": {
