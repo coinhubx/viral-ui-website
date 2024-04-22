@@ -1,5 +1,5 @@
 import db from "@/db";
-import { components } from "@/db/schemas/components";
+import { Component, components } from "@/db/schemas/components";
 import { users } from "@/db/schemas/users";
 import { and, eq, inArray } from "drizzle-orm";
 
@@ -17,7 +17,7 @@ export async function POST(req: Request) {
       ),
     );
 
-  let output = null;
+  let output: Component[] = [];
   if (res.length) {
     output = res.map((r) => r.components);
   }
