@@ -8,7 +8,7 @@ import { useRef, useTransition } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { z } from "zod";
 
-function ComponentForm() {
+function AddComponentForm() {
   const { toast } = useToast();
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -74,7 +74,7 @@ function ComponentForm() {
         ref={formRef}
       >
         <Textarea
-          className="min-h-[450px]"
+          className="min-h-[450px] p-3"
           placeholder="Enter component content"
           name="content"
           disabled={isPending}
@@ -97,4 +97,4 @@ function ComponentForm() {
   );
 }
 
-export default ComponentForm;
+export default AddComponentForm;

@@ -2,6 +2,7 @@ import "./globals.css";
 import { Metadata } from "next";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/providers/ThemeProvider";
+import Header from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "ViralUI",
@@ -23,6 +24,8 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <Header />
+
             {children}
 
             <Toaster />

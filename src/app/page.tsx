@@ -1,14 +1,5 @@
-import ComponentForm from "@/components/ComponentForm";
-import Header from "@/components/Header";
-
 function HomePage() {
-  return (
-    <main className="flex flex-col items-center">
-      <Header />
-
-      <ComponentForm />
-    </main>
-  );
+  return <main className="flex flex-col items-center"></main>;
 }
 
 export default HomePage;

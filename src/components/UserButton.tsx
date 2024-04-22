@@ -25,7 +25,7 @@ function UserButton({ user }: Props) {
 
   const [isPending, startTransition] = useTransition();
 
-  const handleClickLogoutButton = async () => [
+  const handleClickSignOutButton = async () => [
     startTransition(async () => {
       const { errorMessage } = await signOutAction();
       if (!errorMessage) {
@@ -58,9 +58,7 @@ function UserButton({ user }: Props) {
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuItem>Support</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <form action={handleClickLogoutButton}>
+            <form action={handleClickSignOutButton}>
               <DropdownMenuItem>
                 <button
                   className="cursor-default"

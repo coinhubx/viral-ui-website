@@ -11,43 +11,31 @@ async function Header() {
 
   return (
     <header className="flex h-16 w-full items-center gap-4 border-b bg-background px-4 md:px-6">
-      <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
+      <nav className="hidden w-full flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
         <Link
-          href="#"
+          href="/"
           className="flex items-center gap-2 text-lg font-semibold md:text-base"
         >
           ViralUI
           <span className="sr-only">ViralUI</span>
         </Link>
         <Link
-          href="#"
+          href="/add-component"
           className="text-muted-foreground transition-colors hover:text-foreground"
         >
-          Dashboard
+          Add Component
         </Link>
         <Link
-          href="#"
+          href="/my-components"
           className="text-muted-foreground transition-colors hover:text-foreground"
         >
-          Orders
+          My Components
         </Link>
         <Link
-          href="#"
+          href="/my-likes"
           className="text-muted-foreground transition-colors hover:text-foreground"
         >
-          Products
-        </Link>
-        <Link
-          href="#"
-          className="text-muted-foreground transition-colors hover:text-foreground"
-        >
-          Customers
-        </Link>
-        <Link
-          href="#"
-          className="text-foreground transition-colors hover:text-foreground"
-        >
-          Settings
+          My Likes
         </Link>
       </nav>
 
@@ -61,38 +49,29 @@ async function Header() {
         <SheetContent side="left">
           <nav className="grid gap-6 text-lg font-medium">
             <Link
-              href="#"
+              href="/"
               className="flex items-center gap-2 text-lg font-semibold"
             >
               ViralUI
               <span className="sr-only">ViralUI</span>
             </Link>
             <Link
-              href="#"
+              href="/add-component"
               className="text-muted-foreground hover:text-foreground"
             >
-              Dashboard
+              Add Component
             </Link>
             <Link
-              href="#"
+              href="/my-components"
               className="text-muted-foreground hover:text-foreground"
             >
-              Orders
+              My Components
             </Link>
             <Link
-              href="#"
+              href="/my-likes"
               className="text-muted-foreground hover:text-foreground"
             >
-              Products
-            </Link>
-            <Link
-              href="#"
-              className="text-muted-foreground hover:text-foreground"
-            >
-              Customers
-            </Link>
-            <Link href="#" className="hover:text-foreground">
-              Settings
+              My Likes
             </Link>
           </nav>
         </SheetContent>
