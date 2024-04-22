@@ -1,6 +1,7 @@
-import { Toaster } from "react-hot-toast";
 import "./globals.css";
 import { Metadata } from "next";
+import { Toaster } from "@/components/ui/toaster";
+import { ThemeProvider } from "@/providers/ThemeProvider";
 
 export const metadata: Metadata = {
   title: "ViralUI",
@@ -16,15 +17,16 @@ export default function RootLayout({
     <>
       <html lang="en">
         <body>
-          {children}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
 
-          <Toaster
-            toastOptions={{
-              style: {
-                textAlign: "center",
-              },
-            }}
-          />
+            <Toaster />
+          </ThemeProvider>
         </body>
       </html>
     </>
