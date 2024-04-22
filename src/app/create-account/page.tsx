@@ -3,65 +3,103 @@
 import { createAccountAction } from "@/actions/users";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-// import { Loader2 } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
+import useTranslateY from "@/hooks/useTranslateY";
+import { EyeIcon, EyeOffIcon, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useTransition } from "react";
-// import toast from "react-hot-toast";
+import { useState, useTransition } from "react";
 
 function CreateAccountPage() {
   const router = useRouter();
+  const { toast } = useToast();
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const [isPending, startTransition] = useTransition();
+
+  const { translateY, containerRef, titleRef } = useTranslateY();
 
   const handleClickCreateAccountButton = async (formData: FormData) => {
     startTransition(async () => {
       const { errorMessage } = await createAccountAction(formData);
       if (!errorMessage) {
         router.replace("/");
-        // toast.success("Account created successfully\nYou are now logged in", {
-        // duration: 5000,
-        // });
+        toast({
+          title: "Success!",
+          description: "A verification link has been sent to your email.",
+          variant: "success",
+        });
       } else {
-        // toast.error(errorMessage);
+        toast({
+          title: "Error!",
+          description: errorMessage,
+          variant: "destructive",
+        });
       }
     });
   };
 
   return (
-    <main className="flex min-h-screen items-center justify-center px-4 pb-24">
-      <div className="relative flex w-full max-w-sm flex-col items-center rounded-lg border bg-popover p-8">
+    <main className="mt-[10vh] flex items-center justify-center px-4">
+      <div
+        ref={containerRef}
+        className="relative flex w-full max-w-sm flex-col items-center rounded-lg border bg-popover p-8"
+      >
         <h1
-          className={`mb-8 text-2xl font-semibold ${isPending && "opacity-0"}`}
+          ref={titleRef}
+          style={{
+            transform: `translateY(${isPending ? `${translateY}px` : "0px"}) scale(${isPending ? "0.6" : "1"})`,
+            transition: "all 300ms ease-in-out",
+          }}
+          className={`mb-8 text-center text-2xl font-semibold`}
         >
-          Create Account
+          {isPending ? "Creating Account" : "Create Account"}
         </h1>
-
-        {isPending && (
-          <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-y-2 text-primary">
-            <p>Creating account...</p>
-            {/* <Loader2 className="size-6 animate-spin" /> */}
-          </div>
-        )}
+        <div
+          className={`absolute left-1/2 top-1/2 size-6 -translate-x-1/2 -translate-y-1/2 ${isPending ? "z-50 opacity-100" : "-z-50 opacity-0"}`}
+        >
+          <Loader2 className="size-full animate-spin" />
+        </div>
 
         <form
-          className={`flex w-full flex-col gap-4 ${isPending && "-z-10 opacity-0"}`}
+          className={`flex w-full flex-col gap-4 transition-opacity duration-300 ease-in-out ${isPending && "-z-10 opacity-0"}`}
           action={handleClickCreateAccountButton}
         >
           <Input
-            type="text"
+            type="email"
             name="email"
             placeholder="Email"
             required
             disabled={isPending}
           />
           <Input
-            type="password"
-            name="password"
-            placeholder="Password"
+            type="text"
+            name="username"
+            placeholder="Username"
             required
             disabled={isPending}
           />
+          <div className="relative">
+            <Input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Password"
+              className="pr-10"
+              required
+            />
+            <button
+              type="button"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground transition-colors duration-200 ease-out hover:text-primary"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {!showPassword ? (
+                <EyeIcon className="size-5" />
+              ) : (
+                <EyeOffIcon className="size-5" />
+              )}
+            </button>
+          </div>
           <Button disabled={isPending}>Create Account</Button>
 
           <p className="mt-3 text-center text-xs">

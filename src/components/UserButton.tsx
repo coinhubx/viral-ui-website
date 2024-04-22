@@ -8,13 +8,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import { CircleUser } from "lucide-react";
 import { useTransition } from "react";
 import { useToast } from "./ui/use-toast";
 import { signOutAction } from "@/actions/users";
 import { User } from "@/lib/types";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 type Props = {
   user: User | null;
@@ -45,16 +46,16 @@ function UserButton({ user }: Props) {
   ];
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="secondary" size="icon" className="rounded-full">
-          <CircleUser className="h-5 w-5" />
-          <span className="sr-only">Toggle user menu</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        {user ? (
-          <>
+    <>
+      {user ? (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="secondary" size="icon" className="rounded-full">
+              <CircleUser className="h-5 w-5" />
+              <span className="sr-only">Toggle user menu</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Settings</DropdownMenuItem>
@@ -69,16 +70,37 @@ function UserButton({ user }: Props) {
                 </button>
               </DropdownMenuItem>
             </form>
-          </>
-        ) : (
-          <DropdownMenuItem>
-            <Link className="w-full cursor-default" href="/login">
-              Login
-            </Link>
-          </DropdownMenuItem>
-        )}
-      </DropdownMenuContent>
-    </DropdownMenu>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ) : (
+        <>
+          <Link
+            href="/create-account"
+            className={cn(
+              buttonVariants({
+                variant: "outline",
+                size: "default",
+                className: "",
+              }),
+            )}
+          >
+            Create Account
+          </Link>
+          <Link
+            href="/login"
+            className={cn(
+              buttonVariants({
+                variant: "default",
+                size: "default",
+                className: "",
+              }),
+            )}
+          >
+            Login
+          </Link>
+        </>
+      )}
+    </>
   );
 }
 
