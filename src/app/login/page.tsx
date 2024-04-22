@@ -1,8 +1,8 @@
 "use client";
 
-import { createAccountAction, loginAction } from "@/actions/users";
-import { Button } from "@/registry/ui/button";
-import { Input } from "@/registry/ui/input";
+import { loginAction } from "@/actions/users";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 // import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
