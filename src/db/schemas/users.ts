@@ -10,3 +10,5 @@ export const users = pgTable("users", {
   youtubeUrl: text("youtube_url"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
+
+export type DBUser = typeof users.$inferSelect;

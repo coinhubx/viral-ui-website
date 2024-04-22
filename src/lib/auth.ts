@@ -1,10 +1,30 @@
 import { cookies } from "next/headers";
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
-import { User } from "@supabase/supabase-js";
+import db from "@/db";
+import { users } from "@/db/schemas/users";
+import { eq } from "drizzle-orm";
+import { User } from "./types";
 
 export const getUser = async () => {
   const auth = getSupabaseAuth();
-  const user = (await auth.getUser()).data.user;
+  const authUser = (await auth.getUser()).data.user;
+  if (!authUser) return null;
+
+  const [dbUser] = await db
+    .select()
+    .from(users)
+    .where(eq(users.id, authUser.id));
+
+  const user: User = {
+    ...authUser,
+    email: dbUser.email,
+    username: dbUser.username,
+    avatarUrl: dbUser.avatarUrl,
+    xUrl: dbUser.xUrl,
+    githubUrl: dbUser.githubUrl,
+    youtubeUrl: dbUser.youtubeUrl,
+    createdAt: dbUser.createdAt,
+  };
 
   return user;
 };

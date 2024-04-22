@@ -1,7 +1,9 @@
-const { drizzle } = require("drizzle-orm/postgres-js");
-const { migrate } = require("drizzle-orm/postgres-js/migrator");
-const postgres = require("postgres");
-require("dotenv").config({ path: ".env.local" });
+import { drizzle } from "drizzle-orm/postgres-js";
+import { migrate } from "drizzle-orm/postgres-js/migrator";
+import postgres from "postgres";
+import dotenv from "dotenv";
+
+dotenv.config({ path: ".env.local" });
 
 const pushMigration = async () => {
   const migrationClient = postgres(process.env.DB_CONNECTION_STRING, {

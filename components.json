@@ -1,5 +1,6 @@
 {
-  "$schema": "https://viral-ui.vercel.app/schema.json",
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "default",
   "rsc": true,
   "tsx": true,
   "tailwind": {

@@ -3,8 +3,10 @@ import { users } from "./users";
 
 export const components = pgTable("components", {
   id: serial("id").primaryKey(),
-  userId: text("user_id").references(() => users.id),
-  componentText: text("component_text").notNull(),
+  userId: text("user_id")
+    .references(() => users.id)
+    .notNull(),
+  content: text("content").notNull(),
   fileName: text("file_name").notNull(),
   score: integer("score").default(0).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),

@@ -1,9 +1,0 @@
-{
-  "name": "label",
-  "files": [
-    {
-      "name": "label.tsx",
-      "content": "import { cn } from \"@/lib/utils\";\nimport { forwardRef, LabelHTMLAttributes } from \"react\";\n\nconst Label = forwardRef<\n  HTMLLabelElement,\n  LabelHTMLAttributes<HTMLLabelElement>\n>(({ className, ...props }, ref) => (\n  <label\n    {...props}\n    ref={ref}\n    className={cn(\n      \"text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70\",\n      className,\n    )}\n  />\n));\nLabel.displayName = \"Label\";\n\nexport { Label };\n"
-    }
-  ]
-}
