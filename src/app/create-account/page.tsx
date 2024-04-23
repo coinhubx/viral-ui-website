@@ -9,6 +9,7 @@ import { EyeIcon, EyeOffIcon, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
+import { z } from "zod";
 
 function CreateAccountPage() {
   const router = useRouter();
@@ -20,14 +21,31 @@ function CreateAccountPage() {
 
   const { translateY, containerRef, titleRef } = useTranslateY();
 
+  const usernameSchema = z.string().refine((username) => {
+    return !/[ <>:"\\`|?*']/.test(username);
+  }, "Username contains invalid characters");
+
   const handleClickCreateAccountButton = async (formData: FormData) => {
+    const username = formData.get("username") as string;
+
+    const usernameResult = usernameSchema.safeParse(username);
+    if (!usernameResult.success) {
+      const message = JSON.parse(usernameResult.error.message)[0].message;
+      toast({
+        title: "Error!",
+        description: message,
+        variant: "destructive",
+      });
+      return;
+    }
+
     startTransition(async () => {
       const { errorMessage } = await createAccountAction(formData);
       if (!errorMessage) {
         router.replace("/");
         toast({
           title: "Success!",
-          description: "A verification link has been sent to your email.",
+          description: "A verification link has been sent to your email",
           variant: "success",
         });
       } else {

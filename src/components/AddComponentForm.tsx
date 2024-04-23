@@ -17,20 +17,20 @@ function AddComponentForm() {
 
   const fileNameSchema = z
     .string()
-    .min(5, "Invalid file name.")
-    .regex(/^(?!\/).*/, "File name should not start with a slash.")
-    .regex(/.*\.(tsx|jsx)$/, "File name should end with .tsx or .jsx.")
+    .min(5, "Invalid file name")
+    .regex(/^(?!\/).*/, "File name should not start with a slash")
+    .regex(/.*\.(tsx|jsx)$/, "File name should end with .tsx or .jsx")
     .refine((fileName) => {
-      return !/[<>:"\\`|?*']/.test(fileName);
-    }, "File name contains invalid characters.");
+      return !/[ <>:"\\`|?*']/.test(fileName);
+    }, "File name contains invalid characters");
 
-  const handleSubmitComponentForm = (formData: FormData) => {
+  const handleSubmitAddComponentForm = (formData: FormData) => {
     const content = formData.get("content") as string;
     const fileName = formData.get("fileName") as string;
     if (content.trim() === "") {
       toast({
         title: "Error!",
-        description: "Component content cannot be empty.",
+        description: "Component content cannot be empty",
         variant: "destructive",
       });
       return;
@@ -52,7 +52,7 @@ function AddComponentForm() {
       if (!errorMessage) {
         toast({
           title: "Success!",
-          description: "Your component has been added to the library.",
+          description: "Your component has been added to the library",
           variant: "success",
         });
         formRef.current?.reset();
@@ -68,7 +68,7 @@ function AddComponentForm() {
 
   return (
     <form
-      action={handleSubmitComponentForm}
+      action={handleSubmitAddComponentForm}
       className="flex w-full max-w-6xl flex-col gap-4"
       ref={formRef}
     >
@@ -77,6 +77,7 @@ function AddComponentForm() {
         placeholder="Enter component content"
         name="content"
         disabled={isPending}
+        required
       />
 
       <div className="flex w-full flex-col gap-2 sm:ml-auto sm:flex-row sm:justify-end">
@@ -85,6 +86,7 @@ function AddComponentForm() {
           placeholder="Enter file name"
           name="fileName"
           disabled={isPending}
+          required
         />
 
         <Button className="w-full sm:w-40" disabled={isPending}>

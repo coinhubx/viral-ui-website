@@ -35,7 +35,7 @@ function UserButton({ user }: Props) {
         router.replace("/login");
         toast({
           title: "Success!",
-          description: "You have been logged out.",
+          description: "You have been logged out",
           variant: "success",
         });
       } else {

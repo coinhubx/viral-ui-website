@@ -27,7 +27,7 @@ function LoginPage() {
         router.replace("/");
         toast({
           title: "Success!",
-          description: "You are now logged in.",
+          description: "You are now logged in",
           variant: "success",
         });
       } else {
