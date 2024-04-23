@@ -41,7 +41,7 @@ function CreateAccountPage() {
   };
 
   return (
-    <main className="mt-[10vh] flex items-center justify-center px-4">
+    <main className="mt-[10vh] flex flex-col items-center px-4">
       <div
         ref={containerRef}
         className="relative flex w-full max-w-sm flex-col items-center rounded-lg border bg-popover p-8"

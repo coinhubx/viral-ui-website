@@ -16,12 +16,14 @@ import { signOutAction } from "@/actions/users";
 import { User } from "@/lib/types";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 type Props = {
   user: User | null;
 };
 
 function UserButton({ user }: Props) {
+  const router = useRouter();
   const { toast } = useToast();
 
   const [isPending, startTransition] = useTransition();
@@ -30,6 +32,7 @@ function UserButton({ user }: Props) {
     startTransition(async () => {
       const { errorMessage } = await signOutAction();
       if (!errorMessage) {
+        router.replace("/login");
         toast({
           title: "Success!",
           description: "You have been logged out.",

@@ -67,33 +67,31 @@ function AddComponentForm() {
   };
 
   return (
-    <div className="mt-10 flex w-full flex-col items-center px-4">
-      <form
-        action={handleSubmitComponentForm}
-        className="flex w-full max-w-6xl flex-col gap-4"
-        ref={formRef}
-      >
-        <Textarea
-          className="min-h-[450px] p-3"
-          placeholder="Enter component content"
-          name="content"
+    <form
+      action={handleSubmitComponentForm}
+      className="flex w-full max-w-6xl flex-col gap-4"
+      ref={formRef}
+    >
+      <Textarea
+        className="min-h-[450px] p-3"
+        placeholder="Enter component content"
+        name="content"
+        disabled={isPending}
+      />
+
+      <div className="flex w-full flex-col gap-2 sm:ml-auto sm:flex-row sm:justify-end">
+        <Input
+          className="w-full sm:w-56"
+          placeholder="Enter file name"
+          name="fileName"
           disabled={isPending}
         />
 
-        <div className="flex w-full flex-col gap-2 sm:ml-auto sm:flex-row sm:justify-end">
-          <Input
-            className="w-full sm:w-56"
-            placeholder="Enter file name"
-            name="fileName"
-            disabled={isPending}
-          />
-
-          <Button className="w-full sm:w-40" disabled={isPending}>
-            Add Component
-          </Button>
-        </div>
-      </form>
-    </div>
+        <Button className="w-full sm:w-40" disabled={isPending}>
+          Add Component
+        </Button>
+      </div>
+    </form>
   );
 }
 
