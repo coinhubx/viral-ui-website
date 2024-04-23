@@ -24,6 +24,9 @@ export const createAccountAction = async (formData: FormData) => {
     const { error, data } = await getSupabaseAuth().signUp({
       email,
       password,
+      options: {
+        emailRedirectTo: "https://viralui.com/login",
+      },
     });
     if (error) throw error;
 
