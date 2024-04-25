@@ -9,7 +9,14 @@ export async function middleware(request: NextRequest) {
   });
 
   const path = new URL(request.url).pathname;
-  if (path === "/") return response;
+
+  if (path === "/") {
+    return NextResponse.redirect(new URL("/hot", request.url));
+  }
+
+  if (path === "/hot" || path === "/latest" || path === "/all-time") {
+    return response;
+  }
 
   const unprotectedPaths = ["/login", "/create-account"];
 
@@ -73,7 +80,7 @@ async function getUser(request: NextRequest, response: NextResponse) {
           });
         },
       },
-    }
+    },
   );
 
   const user = (await supabaseClient.auth.getUser()).data.user;

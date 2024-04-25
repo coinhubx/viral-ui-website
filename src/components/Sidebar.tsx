@@ -26,8 +26,8 @@ function Sidebar() {
       <SheetContent side="left">
         <nav className="grid gap-6 text-lg font-medium">
           <Link
-            href="/"
-            className="flex items-center gap-2 text-lg font-semibold"
+            href="/hot"
+            className="flex items-center gap-2 text-lg font-semibold text-red-500"
           >
             ViralUI
             <span className="sr-only">ViralUI</span>
