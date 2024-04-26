@@ -10,22 +10,15 @@ export async function middleware(request: NextRequest) {
 
   const path = new URL(request.url).pathname;
 
-  if (path === "/") {
-    return NextResponse.redirect(new URL("/hot", request.url));
-  }
+  const homePaths = ["/hot", "/latest", "/all-time"];
+  if (homePaths.includes(path) || path.includes(".")) return response;
 
-  if (path === "/hot" || path === "/latest" || path === "/all-time") {
-    return response;
-  }
-
-  const unprotectedPaths = ["/login", "/create-account"];
-
+  const authPaths = ["/login", "/create-account"];
   const user = await getUser(request, response);
-  const isUnprotectedPath = unprotectedPaths.some((up) => path.startsWith(up));
 
-  if (user && isUnprotectedPath) {
+  if (user && authPaths.includes(path)) {
     return NextResponse.redirect(new URL("/", request.url));
-  } else if (!user && !isUnprotectedPath) {
+  } else if (!user && !authPaths.includes(path)) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
@@ -33,7 +26,7 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!api|_next/static|_next/image).*)"],
 };
 
 async function getUser(request: NextRequest, response: NextResponse) {

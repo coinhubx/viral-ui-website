@@ -3,6 +3,8 @@
 import { Component } from "@/db/schemas/components";
 import { DBUser } from "@/db/schemas/users";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import useGetTheme from "@/hooks/useGetTheme";
+import { GitHubIcon, XIcon, YouTubeIcon } from "./SocialIcons";
 
 type Props = {
   component: Component;
@@ -10,10 +12,12 @@ type Props = {
 };
 
 function Post({ component, user }: Props) {
+  const theme = useGetTheme();
+
   return (
     <div
       key={component.id}
-      className="min-h-96 w-full max-w-3xl rounded-md bg-background p-4"
+      className="min-h-96 w-full max-w-3xl rounded-md bg-popover p-4"
     >
       <div className="mb-2">
         <div className="flex items-center justify-between">
@@ -31,17 +35,17 @@ function Post({ component, user }: Props) {
         <div className="flex gap-2">
           {user.githubUrl && (
             <a target="_blank" href={user.githubUrl}>
-              GitHub
+              <GitHubIcon />
             </a>
           )}
           {user.xUrl && (
             <a target="_blank" href={user.xUrl}>
-              X
+              <XIcon />
             </a>
           )}
           {user.youtubeUrl && (
             <a target="_blank" href={user.youtubeUrl}>
-              YouTube
+              <YouTubeIcon />
             </a>
           )}
         </div>

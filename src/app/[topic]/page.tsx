@@ -1,9 +1,7 @@
 import Post from "@/components/Post";
-import { AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import db from "@/db";
 import { Component, components } from "@/db/schemas/components";
 import { DBUser, users } from "@/db/schemas/users";
-import { Avatar } from "@radix-ui/react-avatar";
 import { desc, eq } from "drizzle-orm";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -54,7 +52,7 @@ async function HomePage({ params }: { params: { topic: string } }) {
         </Link>
       </div>
 
-      <div className="flex w-full max-w-5xl flex-col items-center gap-y-6 rounded-lg bg-muted p-4">
+      <div className="flex w-full flex-col items-center gap-y-6">
         {componentsInfo.map(({ component, user }) => (
           <Post component={component} user={user} key={component.id} />
         ))}

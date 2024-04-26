@@ -18,12 +18,7 @@ export default function RootLayout({
     <>
       <html lang="en">
         <body>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
+          <ThemeProvider>
             <Header />
 
             {children}
