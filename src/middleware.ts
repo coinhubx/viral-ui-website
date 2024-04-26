@@ -10,6 +10,8 @@ export async function middleware(request: NextRequest) {
 
   const path = new URL(request.url).pathname;
 
+  if (path === "/") return NextResponse.redirect(new URL("/hot", request.url));
+
   const homePaths = ["/hot", "/latest", "/all-time"];
   if (homePaths.includes(path) || path.includes(".")) return response;
 

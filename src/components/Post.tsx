@@ -3,7 +3,6 @@
 import { Component } from "@/db/schemas/components";
 import { DBUser } from "@/db/schemas/users";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import useGetTheme from "@/hooks/useGetTheme";
 import { GitHubIcon, XIcon, YouTubeIcon } from "./SocialIcons";
 
 type Props = {
@@ -12,8 +11,6 @@ type Props = {
 };
 
 function Post({ component, user }: Props) {
-  const theme = useGetTheme();
-
   return (
     <div
       key={component.id}
