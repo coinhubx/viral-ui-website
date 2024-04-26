@@ -6,8 +6,13 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { User } from "@/lib/types";
 
-function Sidebar() {
+type Props = {
+  user: User | null;
+};
+
+function Sidebar({ user }: Props) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -39,13 +44,13 @@ function Sidebar() {
             Add Component
           </Link>
           <Link
-            href="/my-components"
+            href={`/profile/${user?.username}/latest`}
             className="text-muted-foreground hover:text-foreground"
           >
             My Components
           </Link>
           <Link
-            href="/my-likes"
+            href="/my-likes/latest"
             className="text-muted-foreground hover:text-foreground"
           >
             My Likes

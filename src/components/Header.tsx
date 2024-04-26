@@ -24,20 +24,20 @@ async function Header() {
           Add Component
         </Link>
         <Link
-          href="/my-components"
+          href={`/profile/${user?.username}/latest`}
           className="text-muted-foreground transition-colors hover:text-foreground"
         >
           My Components
         </Link>
         <Link
-          href="/my-likes"
+          href="/my-likes/latest"
           className="text-muted-foreground transition-colors hover:text-foreground"
         >
           My Likes
         </Link>
       </nav>
 
-      <Sidebar />
+      <Sidebar user={user} />
 
       <div className="flex w-full items-center justify-end gap-4 md:ml-auto md:w-fit md:gap-2 lg:gap-4">
         <ModeToggle />
