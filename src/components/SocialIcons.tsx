@@ -9,7 +9,7 @@ export function GitHubIcon({ className }: Props) {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 1024 1024"
-      className={cn("size-6", className)}
+      className={cn("size-4", className)}
     >
       <path
         fill="currentColor"
@@ -25,7 +25,7 @@ export function XIcon({ className }: Props) {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 512 462.799"
-      className={cn("size-6", className)}
+      className={cn("size-4", className)}
     >
       <path
         fill="currentColor"
@@ -40,7 +40,7 @@ export function YouTubeIcon({ className }: Props) {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 28.57  20"
-      className={cn("size-6", className)}
+      className={cn("size-4", className)}
     >
       <path
         fill="#FF0000"

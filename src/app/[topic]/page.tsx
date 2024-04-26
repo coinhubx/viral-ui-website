@@ -33,7 +33,7 @@ async function HomePage({ params }: { params: { topic: string } }) {
   }
 
   return (
-    <main className="mt-10 flex flex-col items-center px-4">
+    <main className="mt-10 flex flex-col items-center px-4 pb-24">
       <div className="mb-5 flex items-center gap-x-8">
         <Link href="/hot" className={`${topic === "hot" && "text-red-500"}`}>
           Hot
