@@ -1,5 +1,5 @@
 {
-  "id": "8d988572-6c1d-4cfd-bb1a-425a3965ebb6",
+  "id": "bfea279a-e58b-4eb3-84e9-53ba8ac3a0fa",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -73,8 +73,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "up_votes": {
-      "name": "up_votes",
+    "votes": {
+      "name": "votes",
       "schema": "",
       "columns": {
         "id": {
@@ -95,6 +95,12 @@
           "primaryKey": false,
           "notNull": true
         },
+        "vote": {
+          "name": "vote",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp",
@@ -105,9 +111,9 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "up_votes_component_id_components_id_fk": {
-          "name": "up_votes_component_id_components_id_fk",
-          "tableFrom": "up_votes",
+        "votes_component_id_components_id_fk": {
+          "name": "votes_component_id_components_id_fk",
+          "tableFrom": "votes",
           "tableTo": "components",
           "columnsFrom": [
             "component_id"
@@ -118,9 +124,9 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "up_votes_user_id_users_id_fk": {
-          "name": "up_votes_user_id_users_id_fk",
-          "tableFrom": "up_votes",
+        "votes_user_id_users_id_fk": {
+          "name": "votes_user_id_users_id_fk",
+          "tableFrom": "votes",
           "tableTo": "users",
           "columnsFrom": [
             "user_id"
@@ -192,7 +198,22 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {
+        "users_email_unique": {
+          "name": "users_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        },
+        "users_username_unique": {
+          "name": "users_username_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "username"
+          ]
+        }
+      }
     }
   },
   "enums": {},
