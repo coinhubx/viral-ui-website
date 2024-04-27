@@ -167,8 +167,8 @@ function Post({ component, user }: Props) {
         )}
 
         <Button
-          data-showMore={showMore}
-          className="absolute bottom-2 left-1/2 -translate-x-1/2 data-[showMore=true]:-bottom-[50px] data-[showMore=true]:text-primary data-[showMore=true]:hover:text-primary/80"
+          data-show-more={showMore}
+          className="absolute bottom-2 left-1/2 -translate-x-1/2 data-[show-more=true]:-bottom-[50px] data-[show-more=true]:text-primary data-[show-more=true]:hover:text-primary/80"
           variant={showMore ? "ghost" : "outline"}
           onClick={() => setShowMore(!showMore)}
         >
