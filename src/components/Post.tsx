@@ -76,7 +76,7 @@ function Post({ component, user }: Props) {
   return (
     <div
       key={component.id}
-      className="flex min-h-96 w-full max-w-3xl flex-col rounded-md bg-popover p-4"
+      className="flex w-full max-w-3xl flex-col rounded-md bg-popover p-4"
     >
       <div className="mb-6 flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -123,7 +123,7 @@ function Post({ component, user }: Props) {
           </div>
         </div>
 
-        <p className="text-sm">
+        <p className="text-xs">
           {component.createdAt.toISOString().slice(0, 10)}
         </p>
       </div>
@@ -156,7 +156,7 @@ function Post({ component, user }: Props) {
         </button>
 
         <pre
-          className="overflow-hidden text-wrap rounded-md bg-muted p-2 text-sm"
+          className="cursor-text overflow-hidden text-wrap rounded-md bg-muted p-2 text-sm"
           style={{ maxHeight: showMore ? "100%" : "500px" }}
         >
           {component.content}
@@ -168,7 +168,7 @@ function Post({ component, user }: Props) {
 
         <Button
           data-showMore={showMore}
-          className="absolute bottom-2 left-1/2 -translate-x-1/2 data-[showMore=true]:text-primary data-[showMore=true]:hover:text-primary/80"
+          className="absolute bottom-2 left-1/2 -translate-x-1/2 data-[showMore=true]:-bottom-[50px] data-[showMore=true]:text-primary data-[showMore=true]:hover:text-primary/80"
           variant={showMore ? "ghost" : "outline"}
           onClick={() => setShowMore(!showMore)}
         >
