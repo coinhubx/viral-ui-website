@@ -20,7 +20,7 @@ import { useToast } from "./ui/use-toast";
 import Link from "next/link";
 
 type Props = {
-  component: Component;
+  component: Component & { score: number };
   user: DBUser;
 };
 
@@ -62,7 +62,7 @@ function Post({ component, user }: Props) {
     if (vote !== "up" && vote !== "down") return;
 
     startTransition(async () => {
-      const { errorMessage } = await voteAction(vote);
+      const { errorMessage } = await voteAction(vote, component.id);
       if (errorMessage) {
         toast({
           title: "Error",

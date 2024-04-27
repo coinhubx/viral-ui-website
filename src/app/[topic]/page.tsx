@@ -2,6 +2,7 @@ import Post from "@/components/Post";
 import db from "@/db";
 import { Component, components } from "@/db/schemas/components";
 import { DBUser, users } from "@/db/schemas/users";
+import { votes } from "@/db/schemas/votes";
 import { desc, eq } from "drizzle-orm";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -9,25 +10,32 @@ import { redirect } from "next/navigation";
 async function HomePage({ params }: { params: { topic: string } }) {
   const { topic } = params;
 
-  let componentsInfo: { component: Component; user: DBUser }[];
+  let componentsInfo: {
+    component: Component;
+    score: number | null;
+    user: DBUser;
+  }[];
 
   if (topic === "hot") {
     componentsInfo = await db
-      .select({ component: components, user: users })
-      .from(components)
-      .innerJoin(users, eq(components.userId, users.id));
-  } else if (topic === "latest") {
-    componentsInfo = await db
-      .select({ component: components, user: users })
+      .select({ component: components, user: users, score: votes.vote })
       .from(components)
       .innerJoin(users, eq(components.userId, users.id))
+      .leftJoin(votes, eq(components.id, votes.componentId));
+  } else if (topic === "latest") {
+    componentsInfo = await db
+      .select({ component: components, user: users, score: votes.vote })
+      .from(components)
+      .innerJoin(users, eq(components.userId, users.id))
+      .leftJoin(votes, eq(components.id, votes.componentId))
       .orderBy(desc(components.createdAt));
   } else if (topic === "all-time") {
     componentsInfo = await db
-      .select({ component: components, user: users })
+      .select({ component: components, user: users, score: votes.vote })
       .from(components)
       .innerJoin(users, eq(components.userId, users.id))
-      .orderBy(desc(components.score));
+      .leftJoin(votes, eq(components.id, votes.componentId))
+      .orderBy(desc(votes.vote));
   } else {
     redirect("/hot");
   }
@@ -53,8 +61,12 @@ async function HomePage({ params }: { params: { topic: string } }) {
       </div>
 
       <div className="flex w-full flex-col items-center gap-y-6">
-        {componentsInfo.map(({ component, user }) => (
-          <Post component={component} user={user} key={component.id} />
+        {componentsInfo.map(({ component, user, score }) => (
+          <Post
+            component={{ ...component, score: score || 0 }}
+            user={user}
+            key={component.id}
+          />
         ))}
       </div>
     </main>

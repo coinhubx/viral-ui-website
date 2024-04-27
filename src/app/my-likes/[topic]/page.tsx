@@ -2,6 +2,7 @@ import Post from "@/components/Post";
 import db from "@/db";
 import { Component, components } from "@/db/schemas/components";
 import { DBUser, users } from "@/db/schemas/users";
+import { votes } from "@/db/schemas/votes";
 import { getUser } from "@/lib/auth";
 import { desc, eq } from "drizzle-orm";
 import Link from "next/link";
@@ -13,28 +14,35 @@ async function MyLikesPage({ params }: { params: { topic: string } }) {
   const user = await getUser();
   const username = user!.username;
 
-  let componentsInfo: { component: Component; user: DBUser }[];
+  let componentsInfo: {
+    component: Component;
+    score: number | null;
+    user: DBUser;
+  }[];
 
   if (topic === "hot") {
     componentsInfo = await db
-      .select({ component: components, user: users })
+      .select({ component: components, user: users, score: votes.vote })
       .from(components)
       .innerJoin(users, eq(components.userId, users.id))
+      .leftJoin(votes, eq(components.id, votes.componentId))
       .where(eq(users.username, username));
   } else if (topic === "latest") {
     componentsInfo = await db
-      .select({ component: components, user: users })
+      .select({ component: components, user: users, score: votes.vote })
       .from(components)
       .innerJoin(users, eq(components.userId, users.id))
       .where(eq(users.username, username))
+      .leftJoin(votes, eq(components.id, votes.componentId))
       .orderBy(desc(components.createdAt));
   } else if (topic === "all-time") {
     componentsInfo = await db
-      .select({ component: components, user: users })
+      .select({ component: components, user: users, score: votes.vote })
       .from(components)
       .innerJoin(users, eq(components.userId, users.id))
+      .leftJoin(votes, eq(components.id, votes.componentId))
       .where(eq(users.username, username))
-      .orderBy(desc(components.score));
+      .orderBy(desc(votes.vote));
   } else {
     redirect(`/${username}/latest`);
   }
@@ -63,8 +71,12 @@ async function MyLikesPage({ params }: { params: { topic: string } }) {
       </div>
 
       <div className="flex w-full flex-col items-center gap-y-6">
-        {componentsInfo.map(({ component, user }) => (
-          <Post component={component} user={user} key={component.id} />
+        {componentsInfo.map(({ component, score, user }) => (
+          <Post
+            component={{ ...component, score: score || 0 }}
+            user={user}
+            key={component.id}
+          />
         ))}
       </div>
     </main>

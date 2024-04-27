@@ -3,17 +3,8 @@ CREATE TABLE IF NOT EXISTS "components" (
 	"user_id" text NOT NULL,
 	"content" text NOT NULL,
 	"file_name" text NOT NULL,
-	"score" integer DEFAULT 0 NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
-);
---> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "votes" (
-	"id" serial PRIMARY KEY NOT NULL,
-	"component_id" integer NOT NULL,
-	"user_id" text NOT NULL,
-	"vote" integer NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "users" (
@@ -27,6 +18,14 @@ CREATE TABLE IF NOT EXISTS "users" (
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "users_email_unique" UNIQUE("email"),
 	CONSTRAINT "users_username_unique" UNIQUE("username")
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "votes" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"component_id" integer NOT NULL,
+	"user_id" text NOT NULL,
+	"vote" integer NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 DO $$ BEGIN
