@@ -2,7 +2,6 @@ import Post from "@/components/Post";
 import db from "@/db";
 import { Component, components } from "@/db/schemas/components";
 import { DBUser, users } from "@/db/schemas/users";
-import { votes } from "@/db/schemas/votes";
 import { desc, eq } from "drizzle-orm";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -16,33 +15,29 @@ async function ProfilePage({
 
   let componentsInfo: {
     component: Component;
-    score: number | null;
     user: DBUser;
   }[];
 
   if (topic === "hot") {
     componentsInfo = await db
-      .select({ component: components, user: users, score: votes.vote })
+      .select({ component: components, user: users })
       .from(components)
       .innerJoin(users, eq(components.userId, users.id))
-      .leftJoin(votes, eq(components.id, votes.componentId))
       .where(eq(users.username, username));
   } else if (topic === "latest") {
     componentsInfo = await db
-      .select({ component: components, user: users, score: votes.vote })
+      .select({ component: components, user: users })
       .from(components)
       .innerJoin(users, eq(components.userId, users.id))
       .where(eq(users.username, username))
-      .leftJoin(votes, eq(components.id, votes.componentId))
       .orderBy(desc(components.createdAt));
   } else if (topic === "all-time") {
     componentsInfo = await db
-      .select({ component: components, user: users, score: votes.vote })
+      .select({ component: components, user: users })
       .from(components)
       .innerJoin(users, eq(components.userId, users.id))
-      .leftJoin(votes, eq(components.id, votes.componentId))
       .where(eq(users.username, username))
-      .orderBy(desc(votes.vote));
+      .orderBy(desc(components.score));
   } else {
     redirect(`/${username}/latest`);
   }
@@ -71,12 +66,8 @@ async function ProfilePage({
       </div>
 
       <div className="flex w-full flex-col items-center gap-y-6">
-        {componentsInfo.map(({ component, score, user }) => (
-          <Post
-            component={{ ...component, score: score || 0 }}
-            user={user}
-            key={component.id}
-          />
+        {componentsInfo.map(({ component, user }) => (
+          <Post component={component} user={user} key={component.id} />
         ))}
       </div>
     </main>

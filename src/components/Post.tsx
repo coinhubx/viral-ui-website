@@ -1,77 +1,33 @@
-"use client";
-
 import { Component } from "@/db/schemas/components";
 import { DBUser } from "@/db/schemas/users";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { GitHubIcon, XIcon, YouTubeIcon } from "./SocialIcons";
-import {
-  ArrowBigDown,
-  ArrowBigUp,
-  Check,
-  Clipboard,
-  ClipboardCheck,
-  SquareTerminal,
-} from "lucide-react";
-import { formatScore } from "@/lib/utils";
-import { Button } from "./ui/button";
-import { useState, useTransition } from "react";
-import { voteAction } from "@/actions/components";
-import { useToast } from "./ui/use-toast";
 import Link from "next/link";
+import {
+  ComponentContent,
+  CopyCodeButton,
+  CopyCommandButton,
+  Score,
+} from "./PostClientComponents";
+import db from "@/db";
+import { votes } from "@/db/schemas/votes";
+import { and, eq } from "drizzle-orm";
 
 type Props = {
-  component: Component & { score: number };
+  component: Component;
   user: DBUser;
 };
 
-function Post({ component, user }: Props) {
-  const { toast } = useToast();
+async function Post({ component, user }: Props) {
+  const _votes = await db
+    .select()
+    .from(votes)
+    .where(and(eq(votes.componentId, component.id), eq(votes.userId, user.id)));
 
-  const [showMore, setShowMore] = useState(false);
-  const [justCopiedCode, setJustCopiedCode] = useState(false);
-  const [justCopiedCommand, setJustCopiedCommand] = useState(false);
-
-  const handleClickCopyCodeButton = () => {
-    setJustCopiedCode(true);
-    navigator.clipboard.writeText(component.content);
-    setTimeout(() => setJustCopiedCode(false), 2000);
-  };
-
-  const handleClickCopyCommandButton = () => {
-    setJustCopiedCommand(true);
-
-    const packageManager = "pnpm";
-    let packageManagerCode = "pnpm dlx";
-
-    // if (packageManager === "npm") {
-    //   packageManagerCode = "npx";
-    // } else if (packageManager === "yarn") {
-    //   packageManagerCode = "yarn create";
-    // }
-
-    const command = `${packageManagerCode} viral-ui add ${user.username} ${component.fileName}`;
-
-    navigator.clipboard.writeText(command);
-    setTimeout(() => setJustCopiedCommand(false), 2000);
-  };
-
-  const [isPending, startTransition] = useTransition();
-
-  const handleClickVoteButton = (formData: FormData) => {
-    const vote = formData.get("vote") as string;
-    if (vote !== "up" && vote !== "down") return;
-
-    startTransition(async () => {
-      const { errorMessage } = await voteAction(vote, component.id);
-      if (errorMessage) {
-        toast({
-          title: "Error",
-          description: errorMessage,
-          variant: "destructive",
-        });
-      }
-    });
-  };
+  let currentVote = 0;
+  if (_votes.length) {
+    currentVote = _votes[0].vote;
+  }
 
   return (
     <div
@@ -131,73 +87,17 @@ function Post({ component, user }: Props) {
       <div className="relative mb-2 flex items-center">
         <p className="mr-10 font-medium">{component.fileName}</p>
 
-        <button
-          className="absolute right-2 rounded-md p-2 transition-colors duration-200 ease-in-out hover:bg-muted"
-          onClick={handleClickCopyCommandButton}
-        >
-          {justCopiedCommand ? (
-            <Check className="size-4" />
-          ) : (
-            <SquareTerminal className="size-4" />
-          )}
-        </button>
+        <CopyCommandButton component={component} user={user} />
       </div>
 
       <div className="relative">
-        <button
-          className="absolute right-2 top-2 rounded-md p-2 transition-colors duration-200 ease-in-out hover:bg-popover"
-          onClick={handleClickCopyCodeButton}
-        >
-          {justCopiedCode ? (
-            <ClipboardCheck className="size-4" />
-          ) : (
-            <Clipboard className="size-4" />
-          )}
-        </button>
+        <CopyCodeButton component={component} />
 
-        <pre
-          className="cursor-text overflow-hidden text-wrap rounded-md bg-muted p-2 text-sm"
-          style={{ maxHeight: showMore ? "100%" : "500px" }}
-        >
-          {component.content}
-        </pre>
-
-        {!showMore && (
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent to-popover" />
-        )}
-
-        <Button
-          data-show-more={showMore}
-          className="absolute bottom-2 left-1/2 -translate-x-1/2 data-[show-more=true]:-bottom-[50px] data-[show-more=true]:text-primary data-[show-more=true]:hover:text-primary/80"
-          variant={showMore ? "ghost" : "outline"}
-          onClick={() => setShowMore(!showMore)}
-        >
-          {showMore ? "Show Less" : "Show More"}
-        </Button>
+        <ComponentContent component={component} />
       </div>
 
       <div className="ml-auto mt-6 grid w-24 grid-cols-3 items-center">
-        <form action={handleClickVoteButton} className="flex justify-center">
-          <button
-            className="hover:text-success transition-colors duration-200 ease-in-out"
-            disabled={isPending}
-          >
-            <ArrowBigUp />
-          </button>
-          <input type="hidden" name="vote" value="up" />
-        </form>
-
-        <p className="mx-auto text-sm">{formatScore(component.score)}</p>
-
-        <form action={handleClickVoteButton} className="flex justify-center">
-          <button
-            className="transition-colors duration-200 ease-in-out hover:text-destructive"
-            disabled={isPending}
-          >
-            <ArrowBigDown />
-          </button>
-          <input type="hidden" name="vote" value="down" />
-        </form>
+        <Score component={component} currentVote={currentVote} />
       </div>
     </div>
   );
