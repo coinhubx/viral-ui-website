@@ -150,6 +150,7 @@ export function Score({ componentId, currentVote, score }: ScoreProps) {
       score: state.score + change,
     };
   });
+  //
 
   const opVote = optimisticVoteAndScore.currentVote;
   const opScore = optimisticVoteAndScore.score;
