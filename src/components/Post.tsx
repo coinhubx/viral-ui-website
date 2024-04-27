@@ -14,7 +14,10 @@ import {
 } from "lucide-react";
 import { formatScore } from "@/lib/utils";
 import { Button } from "./ui/button";
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import { voteAction } from "@/actions/components";
+import { useToast } from "./ui/use-toast";
+import Link from "next/link";
 
 type Props = {
   component: Component;
@@ -22,6 +25,8 @@ type Props = {
 };
 
 function Post({ component, user }: Props) {
+  const { toast } = useToast();
+
   const [showMore, setShowMore] = useState(false);
   const [justCopiedCode, setJustCopiedCode] = useState(false);
   const [justCopiedCommand, setJustCopiedCommand] = useState(false);
@@ -50,6 +55,24 @@ function Post({ component, user }: Props) {
     setTimeout(() => setJustCopiedCommand(false), 2000);
   };
 
+  const [isPending, startTransition] = useTransition();
+
+  const handleClickVoteButton = (formData: FormData) => {
+    const vote = formData.get("vote") as string;
+    if (vote !== "up" && vote !== "down") return;
+
+    startTransition(async () => {
+      const { errorMessage } = await voteAction(vote);
+      if (errorMessage) {
+        toast({
+          title: "Error",
+          description: errorMessage,
+          variant: "destructive",
+        });
+      }
+    });
+  };
+
   return (
     <div
       key={component.id}
@@ -57,25 +80,43 @@ function Post({ component, user }: Props) {
     >
       <div className="mb-6 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Avatar>
-            <AvatarImage src={user.avatarUrl || undefined} />
-            <AvatarFallback>{user.username[0]}</AvatarFallback>
-          </Avatar>
-          <p>{user.username}</p>
+          <Link
+            href={`/profile/${user.username}/latest`}
+            className="flex items-center gap-2"
+          >
+            <Avatar>
+              <AvatarImage src={user.avatarUrl || undefined} />
+              <AvatarFallback>{user.username[0]}</AvatarFallback>
+            </Avatar>
+
+            <p>{user.username}</p>
+          </Link>
 
           <div className="flex gap-2">
             {user.githubUrl && (
-              <a target="_blank" href={user.githubUrl}>
+              <a
+                target="_blank"
+                href={user.githubUrl}
+                className="duration-200 ease-in-out hover:scale-[105%]"
+              >
                 <GitHubIcon />
               </a>
             )}
             {user.xUrl && (
-              <a target="_blank" href={user.xUrl}>
+              <a
+                target="_blank"
+                href={user.xUrl}
+                className="duration-200 ease-in-out hover:scale-[105%]"
+              >
                 <XIcon />
               </a>
             )}
             {user.youtubeUrl && (
-              <a target="_blank" href={user.youtubeUrl}>
+              <a
+                target="_blank"
+                href={user.youtubeUrl}
+                className="duration-200 ease-in-out hover:scale-[105%]"
+              >
                 <YouTubeIcon />
               </a>
             )}
@@ -127,7 +168,7 @@ function Post({ component, user }: Props) {
 
         <Button
           data-showMore={showMore}
-          className="absolute bottom-2 left-1/2 -translate-x-1/2 data-[showMore=true]:text-red-500 data-[showMore=true]:hover:text-red-500/80"
+          className="absolute bottom-2 left-1/2 -translate-x-1/2 data-[showMore=true]:text-primary data-[showMore=true]:hover:text-primary/80"
           variant={showMore ? "ghost" : "outline"}
           onClick={() => setShowMore(!showMore)}
         >
@@ -136,15 +177,27 @@ function Post({ component, user }: Props) {
       </div>
 
       <div className="ml-auto mt-6 grid w-24 grid-cols-3 items-center">
-        <button className="mx-auto transition-colors duration-200 ease-in-out hover:text-green-500">
-          <ArrowBigUp />
-        </button>
+        <form action={handleClickVoteButton} className="flex justify-center">
+          <button
+            className="hover:text-success transition-colors duration-200 ease-in-out"
+            disabled={isPending}
+          >
+            <ArrowBigUp />
+          </button>
+          <input type="hidden" name="vote" value="up" />
+        </form>
 
         <p className="mx-auto text-sm">{formatScore(component.score)}</p>
 
-        <button className="mx-auto transition-colors duration-200 ease-in-out hover:text-red-500">
-          <ArrowBigDown />
-        </button>
+        <form action={handleClickVoteButton} className="flex justify-center">
+          <button
+            className="transition-colors duration-200 ease-in-out hover:text-destructive"
+            disabled={isPending}
+          >
+            <ArrowBigDown />
+          </button>
+          <input type="hidden" name="vote" value="down" />
+        </form>
       </div>
     </div>
   );

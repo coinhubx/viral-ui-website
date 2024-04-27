@@ -35,18 +35,18 @@ async function HomePage({ params }: { params: { topic: string } }) {
   return (
     <main className="mt-10 flex flex-col items-center px-4 pb-24">
       <div className="mb-5 flex items-center gap-x-8">
-        <Link href="/hot" className={`${topic === "hot" && "text-red-500"}`}>
+        <Link href="/hot" className={`${topic === "hot" && "text-primary"}`}>
           Hot
         </Link>
         <Link
           href="/latest"
-          className={`${topic === "latest" && "text-red-500"}`}
+          className={`${topic === "latest" && "text-primary"}`}
         >
           Latest
         </Link>
         <Link
           href="/all-time"
-          className={`${topic === "all-time" && "text-red-500"}`}
+          className={`${topic === "all-time" && "text-primary"}`}
         >
           All Time
         </Link>

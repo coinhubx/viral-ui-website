@@ -44,19 +44,19 @@ async function MyLikesPage({ params }: { params: { topic: string } }) {
       <div className="mb-5 flex items-center gap-x-8">
         <Link
           href={`/profile/${username}/hot`}
-          className={`${topic === "hot" && "text-red-500"}`}
+          className={`${topic === "hot" && "text-primary"}`}
         >
           Hot
         </Link>
         <Link
           href={`/profile/${username}/latest`}
-          className={`${topic === "latest" && "text-red-500"}`}
+          className={`${topic === "latest" && "text-primary"}`}
         >
           Latest
         </Link>
         <Link
           href={`/profile/${username}/all-time`}
-          className={`${topic === "all-time" && "text-red-500"}`}
+          className={`${topic === "all-time" && "text-primary"}`}
         >
           All Time
         </Link>

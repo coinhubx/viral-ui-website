@@ -32,7 +32,7 @@ function Sidebar({ user }: Props) {
         <nav className="grid gap-6 text-lg font-medium">
           <Link
             href="/hot"
-            className="flex items-center gap-2 text-lg font-semibold text-red-500"
+            className="flex items-center gap-2 text-lg font-semibold text-primary"
           >
             ViralUI
             <span className="sr-only">ViralUI</span>

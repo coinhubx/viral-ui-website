@@ -12,7 +12,7 @@ async function Header() {
       <nav className="hidden w-full flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
         <Link
           href="/hot"
-          className="flex items-center gap-2 text-lg font-semibold text-red-500 md:text-base"
+          className="flex items-center gap-2 text-lg font-semibold text-primary md:text-base"
         >
           ViralUI
           <span className="sr-only">ViralUI</span>
