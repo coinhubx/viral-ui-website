@@ -29,6 +29,17 @@ async function Post({ component, user }: Props) {
     currentVote = _votes[0].vote;
   }
 
+  const score = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/votes`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    next: { tags: [component.id.toString()] },
+    body: JSON.stringify({
+      componentId: component.id,
+    }),
+  }).then((res) => res.json());
+
   return (
     <div
       key={component.id}
@@ -87,17 +98,21 @@ async function Post({ component, user }: Props) {
       <div className="relative mb-2 flex items-center">
         <p className="mr-10 font-medium">{component.fileName}</p>
 
-        <CopyCommandButton component={component} user={user} />
+        <CopyCommandButton componentFileName={component.fileName} user={user} />
       </div>
 
       <div className="relative">
-        <CopyCodeButton component={component} />
+        <CopyCodeButton componentContent={component.content} />
 
-        <ComponentContent component={component} />
+        <ComponentContent componentContent={component.content} />
       </div>
 
       <div className="ml-auto mt-6 grid w-24 grid-cols-3 items-center">
-        <Score component={component} currentVote={currentVote} />
+        <Score
+          componentId={component.id}
+          currentVote={currentVote}
+          score={score}
+        />
       </div>
     </div>
   );

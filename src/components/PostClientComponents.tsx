@@ -1,6 +1,5 @@
 "use client";
 
-import { Component } from "@/db/schemas/components";
 import { DBUser } from "@/db/schemas/users";
 import {
   ArrowBigDown,
@@ -10,24 +9,27 @@ import {
   ClipboardCheck,
   SquareTerminal,
 } from "lucide-react";
-import { useState, useTransition } from "react";
+import { useOptimistic, useState } from "react";
 import { Button } from "./ui/button";
 import { useToast } from "./ui/use-toast";
-import { voteAction } from "@/actions/components";
+import { downVoteAction, upVoteAction } from "@/actions/components";
 import { formatScore } from "@/lib/utils";
 
 type CopyCommandButtonProps = {
-  component: Component;
+  componentFileName: string;
   user: DBUser;
 };
 
-export function CopyCommandButton({ component, user }: CopyCommandButtonProps) {
+export function CopyCommandButton({
+  componentFileName,
+  user,
+}: CopyCommandButtonProps) {
   const [justCopiedCommand, setJustCopiedCommand] = useState(false);
 
   const handleClickCopyCommandButton = () => {
     setJustCopiedCommand(true);
 
-    const command = `pnpm dlx viral-ui add ${user.username} ${component.fileName}`;
+    const command = `pnpm dlx viral-ui add ${user.username} ${componentFileName}`;
 
     navigator.clipboard.writeText(command);
     setTimeout(() => setJustCopiedCommand(false), 2000);
@@ -48,15 +50,15 @@ export function CopyCommandButton({ component, user }: CopyCommandButtonProps) {
 }
 
 type CopyCodeButtonProps = {
-  component: Component;
+  componentContent: string;
 };
 
-export function CopyCodeButton({ component }: CopyCodeButtonProps) {
+export function CopyCodeButton({ componentContent }: CopyCodeButtonProps) {
   const [justCopiedCode, setJustCopiedCode] = useState(false);
 
   const handleClickCopyCodeButton = () => {
     setJustCopiedCode(true);
-    navigator.clipboard.writeText(component.content);
+    navigator.clipboard.writeText(componentContent);
     setTimeout(() => setJustCopiedCode(false), 2000);
   };
 
@@ -74,7 +76,7 @@ export function CopyCodeButton({ component }: CopyCodeButtonProps) {
   );
 }
 
-export function ComponentContent({ component }: CopyCodeButtonProps) {
+export function ComponentContent({ componentContent }: CopyCodeButtonProps) {
   const [showMore, setShowMore] = useState(false);
 
   return (
@@ -83,7 +85,7 @@ export function ComponentContent({ component }: CopyCodeButtonProps) {
         className="cursor-text overflow-hidden text-wrap rounded-md bg-muted p-2 text-sm"
         style={{ maxHeight: showMore ? "100%" : "500px" }}
       >
-        {component.content}
+        {componentContent}
       </pre>
 
       {!showMore && (
@@ -103,58 +105,105 @@ export function ComponentContent({ component }: CopyCodeButtonProps) {
 }
 
 type ScoreProps = {
-  component: Component;
+  componentId: number;
   currentVote: number;
+  score: number;
 };
 
-export function Score({ component, currentVote }: ScoreProps) {
+export function Score({ componentId, currentVote, score }: ScoreProps) {
   const { toast } = useToast();
 
-  const [isPending, startTransition] = useTransition();
+  const [optimisticVoteAndScore, updateOptimisticVoteAndScore] = useOptimistic<
+    { currentVote: number; score: number },
+    "up" | "down"
+  >({ currentVote, score }, (state, direction) => {
+    const newCurrentVote = direction === "up" ? 1 : -1;
 
-  const handleClickVoteButton = (formData: FormData) => {
-    const direction = formData.get("direction") as "up" | "down";
+    let change = 0;
 
-    startTransition(async () => {
-      const { errorMessage } = await voteAction(
-        direction,
-        component.id,
-        currentVote,
-      );
-      if (errorMessage) {
-        toast({
-          title: "Error",
-          description: errorMessage,
-          variant: "destructive",
-        });
+    // Haven't voted yet
+    if (currentVote === 0) {
+      if (direction === "up") {
+        change = 1;
+      } else if (direction === "down") {
+        change = -1;
       }
-    });
+    }
+    // Already up-voted
+    else if (currentVote === 1) {
+      if (direction === "up") {
+        change = -1;
+      } else if (direction === "down") {
+        change = -2;
+      }
+    }
+    // Already down-voted
+    else if (currentVote === -1) {
+      if (direction === "up") {
+        change = 2;
+      } else if (direction === "down") {
+        change = 1;
+      }
+    }
+    return {
+      currentVote: newCurrentVote,
+      score: state.score + change,
+    };
+  });
+
+  const opVote = optimisticVoteAndScore.currentVote;
+  const opScore = optimisticVoteAndScore.score;
+
+  const handleClickUpVoteButton = async () => {
+    const direction = "up";
+
+    updateOptimisticVoteAndScore(direction);
+
+    const { errorMessage } = await upVoteAction(componentId, opVote);
+    if (errorMessage) {
+      toast({
+        title: "Error",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleClickDownVoteButton = async () => {
+    const direction = "down";
+
+    updateOptimisticVoteAndScore(direction);
+
+    const { errorMessage } = await downVoteAction(componentId, opVote);
+    if (errorMessage) {
+      toast({
+        title: "Error",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    }
   };
 
   return (
     <>
-      <form action={handleClickVoteButton} className="flex justify-center">
+      <form action={handleClickUpVoteButton} className="flex justify-center">
         <button
-          data-is-active={currentVote === 1}
+          data-is-active={opVote === 1}
           className="hover:text-success data-[is-active=true]:text-success transition-colors duration-200 ease-in-out"
-          disabled={isPending}
         >
           <ArrowBigUp />
         </button>
-        <input type="hidden" name="direction" value="up" />
       </form>
 
-      <p className="mx-auto text-sm">{formatScore(component.score)}</p>
+      <p className="mx-auto text-sm">{formatScore(opScore)}</p>
 
-      <form action={handleClickVoteButton} className="flex justify-center">
+      <form action={handleClickDownVoteButton} className="flex justify-center">
         <button
-          data-is-active={currentVote === -1}
+          data-is-active={opVote === -1}
           className="transition-colors duration-200 ease-in-out hover:text-destructive data-[is-active=true]:text-destructive"
-          disabled={isPending}
         >
           <ArrowBigDown />
         </button>
-        <input type="hidden" name="direction" value="down" />
       </form>
     </>
   );
