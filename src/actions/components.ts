@@ -6,7 +6,7 @@ import { votes } from "@/db/schemas/votes";
 import { getUser } from "@/lib/auth";
 import { getErrorMessage } from "@/lib/utils";
 import { and, eq, sql } from "drizzle-orm";
-import { revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 
 export const submitComponentAction = async (
   content: string,
@@ -17,6 +17,8 @@ export const submitComponentAction = async (
     if (!user) throw new Error("Must be logged in to add a component");
 
     await db.insert(components).values({ userId: user.id, content, fileName });
+
+    revalidatePath("/");
 
     return { errorMessage: null };
   } catch (error) {

@@ -2,7 +2,7 @@ import Post from "@/components/Post";
 import db from "@/db";
 import { Component, components } from "@/db/schemas/components";
 import { DBUser, users } from "@/db/schemas/users";
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, sql } from "drizzle-orm";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -23,23 +23,31 @@ async function ProfilePage({
       .select({ component: components, user: users })
       .from(components)
       .innerJoin(users, eq(components.userId, users.id))
-      .where(eq(users.username, username));
+      .where(eq(users.username, username))
+      .orderBy(
+        desc(
+          sql`(${components.score} * 20) - (EXTRACT(EPOCH FROM (NOW() - ${components.createdAt})) / 1000)`,
+        ),
+      )
+      .limit(50);
   } else if (topic === "latest") {
     componentsInfo = await db
       .select({ component: components, user: users })
       .from(components)
       .innerJoin(users, eq(components.userId, users.id))
       .where(eq(users.username, username))
-      .orderBy(desc(components.createdAt));
+      .orderBy(desc(components.createdAt))
+      .limit(50);
   } else if (topic === "all-time") {
     componentsInfo = await db
       .select({ component: components, user: users })
       .from(components)
       .innerJoin(users, eq(components.userId, users.id))
       .where(eq(users.username, username))
-      .orderBy(desc(components.score));
+      .orderBy(desc(components.score))
+      .limit(50);
   } else {
-    redirect(`/${username}/latest`);
+    redirect(`/${username}/hot`);
   }
 
   return (
