@@ -24,63 +24,52 @@ export const submitComponentAction = async (
   }
 };
 
-export const upVoteAction = async (
-  componentId: number,
-  currentVote: number,
-) => {
+export const upVoteAction = async (componentId: number) => {
   try {
     const user = await getUser();
     if (!user) throw new Error("Must be logged in to vote");
 
-    const newVote = 1;
+    const [{ vote: currentVote }] = await db
+      .select()
+      .from(votes)
+      .where(
+        and(eq(votes.userId, user.id), eq(votes.componentId, componentId)),
+      );
 
-    const insertVote = async () => {
-      await db
-        .insert(votes)
-        .values({ userId: user.id, componentId, vote: newVote });
-    };
+    let change = 0;
 
-    const deleteVote = async () => {
+    // haven't voted yet
+    if (currentVote === 0) {
+      change = 1;
+      // insert vote
+      await db.insert(votes).values({ userId: user.id, componentId, vote: 1 });
+    }
+    // already up-voted
+    else if (currentVote === 1) {
+      change = -1;
+      // delete vote
       await db
         .delete(votes)
         .where(
           and(eq(votes.userId, user.id), eq(votes.componentId, componentId)),
         );
-    };
-
-    const replaceVote = async () => {
+    }
+    // already down-voted
+    else if (currentVote === -1) {
+      change = 2;
+      // replace vote
       await db
         .update(votes)
-        .set({ vote: newVote, createdAt: new Date() })
+        .set({ vote: 1, createdAt: new Date() })
         .where(
           and(eq(votes.userId, user.id), eq(votes.componentId, componentId)),
         );
-    };
-
-    let change = 0;
-
-    // Haven't voted yet
-    if (currentVote === 0) {
-      change = 1;
-      await insertVote();
-    }
-    // Already up-voted
-    else if (currentVote === 1) {
-      change = -1;
-      await deleteVote();
-    }
-    // Already down-voted
-    else if (currentVote === -1) {
-      change = 2;
-      await replaceVote();
     }
 
     await db
       .update(components)
       .set({ score: sql`${components.score} + ${change}` })
       .where(eq(components.id, componentId));
-
-    revalidateTag(componentId.toString());
 
     return { errorMessage: null };
   } catch (error) {
@@ -88,63 +77,52 @@ export const upVoteAction = async (
   }
 };
 
-export const downVoteAction = async (
-  componentId: number,
-  currentVote: number,
-) => {
+export const downVoteAction = async (componentId: number) => {
   try {
     const user = await getUser();
     if (!user) throw new Error("Must be logged in to vote");
 
-    const newVote = -1;
+    const [{ vote: currentVote }] = await db
+      .select()
+      .from(votes)
+      .where(
+        and(eq(votes.userId, user.id), eq(votes.componentId, componentId)),
+      );
 
-    const insertVote = async () => {
+    let change = 0;
+
+    // haven't voted yet
+    if (currentVote === 0) {
+      change = -1;
+      // insert vote
+      await db.insert(votes).values({ userId: user.id, componentId, vote: -1 });
+    }
+    // already up-voted
+    else if (currentVote === 1) {
+      change = -2;
+      // replace vote
       await db
-        .insert(votes)
-        .values({ userId: user.id, componentId, vote: newVote });
-    };
-
-    const deleteVote = async () => {
+        .update(votes)
+        .set({ vote: -1, createdAt: new Date() })
+        .where(
+          and(eq(votes.userId, user.id), eq(votes.componentId, componentId)),
+        );
+    }
+    // already down-voted
+    else if (currentVote === -1) {
+      change = 1;
+      // delete vote
       await db
         .delete(votes)
         .where(
           and(eq(votes.userId, user.id), eq(votes.componentId, componentId)),
         );
-    };
-
-    const replaceVote = async () => {
-      await db
-        .update(votes)
-        .set({ vote: newVote, createdAt: new Date() })
-        .where(
-          and(eq(votes.userId, user.id), eq(votes.componentId, componentId)),
-        );
-    };
-
-    let change = 0;
-
-    // Haven't voted yet
-    if (currentVote === 0) {
-      change = -1;
-      await insertVote();
-    }
-    // Already up-voted
-    else if (currentVote === 1) {
-      change = -2;
-      await replaceVote();
-    }
-    // Already down-voted
-    else if (currentVote === -1) {
-      change = 1;
-      await deleteVote();
     }
 
     await db
       .update(components)
       .set({ score: sql`${components.score} + ${change}` })
       .where(eq(components.id, componentId));
-
-    revalidateTag(componentId.toString());
 
     return { errorMessage: null };
   } catch (error) {

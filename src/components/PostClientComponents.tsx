@@ -113,53 +113,27 @@ type ScoreProps = {
 export function Score({ componentId, currentVote, score }: ScoreProps) {
   const { toast } = useToast();
 
-  const [optimisticVoteAndScore, updateOptimisticVoteAndScore] = useOptimistic<
-    { currentVote: number; score: number },
-    "up" | "down"
-  >({ currentVote, score }, (state, direction) => {
-    const newCurrentVote = direction === "up" ? 1 : -1;
-
-    let change = 0;
-
-    // Haven't voted yet
-    if (currentVote === 0) {
-      if (direction === "up") {
-        change = 1;
-      } else if (direction === "down") {
-        change = -1;
-      }
-    }
-    // Already up-voted
-    else if (currentVote === 1) {
-      if (direction === "up") {
-        change = -1;
-      } else if (direction === "down") {
-        change = -2;
-      }
-    }
-    // Already down-voted
-    else if (currentVote === -1) {
-      if (direction === "up") {
-        change = 2;
-      } else if (direction === "down") {
-        change = 1;
-      }
-    }
-    return {
-      currentVote: newCurrentVote,
-      score: state.score + change,
-    };
-  });
-
-  const opVote = optimisticVoteAndScore.currentVote;
-  const opScore = optimisticVoteAndScore.score;
+  const [localCurrentVote, setLocalCurrentVote] = useState(currentVote);
+  const [localScore, setLocalScore] = useState(score);
 
   const handleClickUpVoteButton = async () => {
-    const direction = "up";
+    // haven't voted yet
+    if (currentVote === 0) {
+      setLocalScore((prevScore) => prevScore + 1);
+      setLocalCurrentVote(1);
+    }
+    // already up-voted
+    else if (currentVote === 1) {
+      setLocalScore((prevScore) => prevScore - 1);
+      setLocalCurrentVote(0);
+    }
+    // already down-voted
+    else if (currentVote === -1) {
+      setLocalScore((prevScore) => prevScore + 2);
+      setLocalCurrentVote(1);
+    }
 
-    updateOptimisticVoteAndScore(direction);
-
-    const { errorMessage } = await upVoteAction(componentId, opVote);
+    const { errorMessage } = await upVoteAction(componentId);
     if (errorMessage) {
       toast({
         title: "Error",
@@ -170,11 +144,23 @@ export function Score({ componentId, currentVote, score }: ScoreProps) {
   };
 
   const handleClickDownVoteButton = async () => {
-    const direction = "down";
+    // haven't voted yet
+    if (currentVote === 0) {
+      setLocalScore((prevScore) => prevScore - 1);
+      setLocalCurrentVote(-1);
+    }
+    // already up-voted
+    else if (currentVote === 1) {
+      setLocalScore((prevScore) => prevScore - 2);
+      setLocalCurrentVote(-1);
+    }
+    // already down-voted
+    else if (currentVote === -1) {
+      setLocalScore((prevScore) => prevScore + 1);
+      setLocalCurrentVote(0);
+    }
 
-    updateOptimisticVoteAndScore(direction);
-
-    const { errorMessage } = await downVoteAction(componentId, opVote);
+    const { errorMessage } = await downVoteAction(componentId);
     if (errorMessage) {
       toast({
         title: "Error",
@@ -188,18 +174,18 @@ export function Score({ componentId, currentVote, score }: ScoreProps) {
     <>
       <form action={handleClickUpVoteButton} className="flex justify-center">
         <button
-          data-is-active={opVote === 1}
-          className="hover:text-success data-[is-active=true]:text-success transition-colors duration-200 ease-in-out"
+          data-is-active={localCurrentVote === 1}
+          className="transition-colors duration-200 ease-in-out hover:text-success data-[is-active=true]:text-success"
         >
           <ArrowBigUp />
         </button>
       </form>
 
-      <p className="mx-auto text-sm">{formatScore(opScore)}</p>
+      <p className="mx-auto text-sm">{formatScore(localScore)}</p>
 
       <form action={handleClickDownVoteButton} className="flex justify-center">
         <button
-          data-is-active={opVote === -1}
+          data-is-active={localCurrentVote === -1}
           className="transition-colors duration-200 ease-in-out hover:text-destructive data-[is-active=true]:text-destructive"
         >
           <ArrowBigDown />

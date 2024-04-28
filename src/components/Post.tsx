@@ -29,17 +29,6 @@ async function Post({ component, user }: Props) {
     currentVote = _votes[0].vote;
   }
 
-  const score = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/votes`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    next: { tags: [component.id.toString()] },
-    body: JSON.stringify({
-      componentId: component.id,
-    }),
-  }).then((res) => res.json());
-
   return (
     <div
       key={component.id}
@@ -111,7 +100,7 @@ async function Post({ component, user }: Props) {
         <Score
           componentId={component.id}
           currentVote={currentVote}
-          score={score}
+          score={component.score}
         />
       </div>
     </div>
