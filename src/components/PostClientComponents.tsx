@@ -118,17 +118,17 @@ export function Score({ componentId, currentVote, score }: ScoreProps) {
 
   const handleClickUpVoteButton = async () => {
     // haven't voted yet
-    if (currentVote === 0) {
+    if (localCurrentVote === 0) {
       setLocalScore((prevScore) => prevScore + 1);
       setLocalCurrentVote(1);
     }
     // already up-voted
-    else if (currentVote === 1) {
+    else if (localCurrentVote === 1) {
       setLocalScore((prevScore) => prevScore - 1);
       setLocalCurrentVote(0);
     }
     // already down-voted
-    else if (currentVote === -1) {
+    else if (localCurrentVote === -1) {
       setLocalScore((prevScore) => prevScore + 2);
       setLocalCurrentVote(1);
     }
@@ -145,17 +145,17 @@ export function Score({ componentId, currentVote, score }: ScoreProps) {
 
   const handleClickDownVoteButton = async () => {
     // haven't voted yet
-    if (currentVote === 0) {
+    if (localCurrentVote === 0) {
       setLocalScore((prevScore) => prevScore - 1);
       setLocalCurrentVote(-1);
     }
     // already up-voted
-    else if (currentVote === 1) {
+    else if (localCurrentVote === 1) {
       setLocalScore((prevScore) => prevScore - 2);
       setLocalCurrentVote(-1);
     }
     // already down-voted
-    else if (currentVote === -1) {
+    else if (localCurrentVote === -1) {
       setLocalScore((prevScore) => prevScore + 1);
       setLocalCurrentVote(0);
     }
@@ -172,25 +172,23 @@ export function Score({ componentId, currentVote, score }: ScoreProps) {
 
   return (
     <>
-      <form action={handleClickUpVoteButton} className="flex justify-center">
-        <button
-          data-is-active={localCurrentVote === 1}
-          className="transition-colors duration-200 ease-in-out hover:text-success data-[is-active=true]:text-success"
-        >
-          <ArrowBigUp />
-        </button>
-      </form>
+      <button
+        data-is-active={localCurrentVote === 1}
+        className="mx-auto transition-colors duration-200 ease-in-out hover:text-success data-[is-active=true]:text-success"
+        onClick={handleClickUpVoteButton}
+      >
+        <ArrowBigUp />
+      </button>
 
       <p className="mx-auto text-sm">{formatScore(localScore)}</p>
 
-      <form action={handleClickDownVoteButton} className="flex justify-center">
-        <button
-          data-is-active={localCurrentVote === -1}
-          className="transition-colors duration-200 ease-in-out hover:text-destructive data-[is-active=true]:text-destructive"
-        >
-          <ArrowBigDown />
-        </button>
-      </form>
+      <button
+        data-is-active={localCurrentVote === -1}
+        className="mx-auto transition-colors duration-200 ease-in-out hover:text-destructive data-[is-active=true]:text-destructive"
+        onClick={handleClickDownVoteButton}
+      >
+        <ArrowBigDown />
+      </button>
     </>
   );
 }
