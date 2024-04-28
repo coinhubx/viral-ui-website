@@ -29,12 +29,17 @@ export const upVoteAction = async (componentId: number) => {
     const user = await getUser();
     if (!user) throw new Error("Must be logged in to vote");
 
-    const [{ vote: currentVote }] = await db
+    const _votes = await db
       .select()
       .from(votes)
       .where(
-        and(eq(votes.userId, user.id), eq(votes.componentId, componentId)),
+        and(eq(votes.componentId, componentId), eq(votes.userId, user.id)),
       );
+
+    let currentVote = 0;
+    if (_votes.length) {
+      currentVote = _votes[0].vote;
+    }
 
     let change = 0;
 
@@ -82,12 +87,17 @@ export const downVoteAction = async (componentId: number) => {
     const user = await getUser();
     if (!user) throw new Error("Must be logged in to vote");
 
-    const [{ vote: currentVote }] = await db
+    const _votes = await db
       .select()
       .from(votes)
       .where(
-        and(eq(votes.userId, user.id), eq(votes.componentId, componentId)),
+        and(eq(votes.componentId, componentId), eq(votes.userId, user.id)),
       );
+
+    let currentVote = 0;
+    if (_votes.length) {
+      currentVote = _votes[0].vote;
+    }
 
     let change = 0;
 
