@@ -9,11 +9,12 @@ import {
   ClipboardCheck,
   SquareTerminal,
 } from "lucide-react";
-import { useOptimistic, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { useToast } from "./ui/use-toast";
 import { downVoteAction, upVoteAction } from "@/actions/components";
 import { formatScore } from "@/lib/utils";
+import { codeToHtml } from "shiki";
 
 type CopyCommandButtonProps = {
   componentFileName: string;
@@ -78,15 +79,38 @@ export function CopyCodeButton({ componentContent }: CopyCodeButtonProps) {
 
 export function ComponentContent({ componentContent }: CopyCodeButtonProps) {
   const [showMore, setShowMore] = useState(false);
+  const [code, setCode] = useState("");
+
+  useEffect(() => {
+    const colorizeCode = async () => {
+      const code = await codeToHtml(componentContent, {
+        lang: "typescript",
+        theme: "one-dark-pro",
+      });
+      setCode(code);
+    };
+    colorizeCode();
+  }, []);
 
   return (
     <>
-      <pre
-        className="cursor-text overflow-hidden text-wrap rounded-md bg-muted p-2 text-sm"
-        style={{ maxHeight: showMore ? "100%" : "500px" }}
+      <div
+        className="w-full cursor-text overflow-x-auto overflow-y-hidden rounded-md p-4 text-sm"
+        style={{
+          maxHeight: showMore ? "100%" : "450px",
+          background: "#282c34",
+        }}
       >
-        {componentContent}
-      </pre>
+        {code && (
+          <div
+            dangerouslySetInnerHTML={{ __html: code }}
+            style={{
+              width: "max-content",
+              minWidth: "100%",
+            }}
+          />
+        )}
+      </div>
 
       {!showMore && (
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent to-popover" />
