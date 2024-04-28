@@ -161,7 +161,7 @@ export function Score({ componentId, currentVote, score }: ScoreProps) {
     if (errorMessage) {
       toast({
         title: "Error",
-        description: "Votes aren't working properly right now",
+        description: errorMessage,
         variant: "destructive",
       });
     }
@@ -188,7 +188,7 @@ export function Score({ componentId, currentVote, score }: ScoreProps) {
     if (errorMessage) {
       toast({
         title: "Error",
-        description: "Votes aren't working properly right now",
+        description: errorMessage,
         variant: "destructive",
       });
     }

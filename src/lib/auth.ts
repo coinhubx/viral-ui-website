@@ -20,6 +20,7 @@ export const getUser = async () => {
     email: dbUser.email,
     username: dbUser.username,
     avatarUrl: dbUser.avatarUrl,
+    packageManager: dbUser.packageManager,
     xUrl: dbUser.xUrl,
     githubUrl: dbUser.githubUrl,
     youtubeUrl: dbUser.youtubeUrl,

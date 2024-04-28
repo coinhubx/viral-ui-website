@@ -3,6 +3,7 @@ import ModeToggle from "./ModeToggle";
 import UserButton from "./UserButton";
 import { getUser } from "@/lib/auth";
 import Sidebar from "./Sidebar";
+import { GitHubIcon } from "./SocialIcons";
 
 async function Header() {
   const user = await getUser();
@@ -40,6 +41,13 @@ async function Header() {
       <Sidebar user={user} />
 
       <div className="flex w-full items-center justify-end gap-4 md:ml-auto md:w-fit md:gap-2 lg:gap-4">
+        <a
+          target="_blank"
+          href="https://github.com/ColeBlender/viral-ui-website"
+        >
+          <GitHubIcon className="size-6" />
+        </a>
+
         <ModeToggle />
 
         <UserButton user={user} />

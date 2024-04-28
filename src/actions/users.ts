@@ -2,7 +2,7 @@
 
 import db from "@/db";
 import { users } from "@/db/schemas/users";
-import { getSupabaseAuth } from "@/lib/auth";
+import { getSupabaseAuth, getUser } from "@/lib/auth";
 import { getErrorMessage } from "@/lib/utils";
 import { eq } from "drizzle-orm";
 
@@ -66,6 +66,35 @@ export const signOutAction = async () => {
   try {
     const { error } = await getSupabaseAuth().signOut();
     if (error) throw error;
+
+    return { errorMessage: null };
+  } catch (error) {
+    return { errorMessage: getErrorMessage(error) };
+  }
+};
+
+export const updateProfileAction = async (formData: FormData) => {
+  try {
+    const user = await getUser();
+    if (!user) throw new Error("Must be logged in to update profile");
+
+    const avatarUrl = formData.get("avatarUrl") as string;
+    const packageManager = formData.get("packageManager") as string;
+    const xUrl = formData.get("xUrl") as string;
+    const githubUrl = formData.get("githubUrl") as string;
+    const youtubeUrl = formData.get("youtubeUrl") as string;
+
+    let data = {
+      avatarUrl,
+      packageManager,
+      xUrl,
+      githubUrl,
+      youtubeUrl,
+    };
+
+    await db.update(users).set(data).where(eq(users.id, user.id));
+    // this code triggers a revalidation of the user data
+    await getSupabaseAuth().updateUser({});
 
     return { errorMessage: null };
   } catch (error) {

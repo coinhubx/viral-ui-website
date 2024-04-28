@@ -1,5 +1,5 @@
 {
-  "id": "67a5fa1b-3453-40a1-8abb-598442c9bec0",
+  "id": "9ac49080-99c0-407f-abfa-deeb3b503d4e",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -97,6 +97,12 @@
         },
         "avatar_url": {
           "name": "avatar_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "package_manager": {
+          "name": "package_manager",
           "type": "text",
           "primaryKey": false,
           "notNull": false

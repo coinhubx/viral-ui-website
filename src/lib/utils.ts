@@ -23,3 +23,11 @@ export function formatScore(score: number) {
   }
   return score;
 }
+
+export const toS3SafeFormat = (input: string): string => {
+  return input
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/[&$@=;:+?^`'"<>#%{}[\]|~\\/]/g, "")
+    .toLowerCase();
+};

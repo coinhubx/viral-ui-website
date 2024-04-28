@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS "users" (
 	"email" text NOT NULL,
 	"username" text NOT NULL,
 	"avatar_url" text,
+	"package_manager" text,
 	"x_url" text,
 	"github_url" text,
 	"youtube_url" text,

@@ -17,6 +17,9 @@ import { User } from "@/lib/types";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { Dialog, DialogTrigger } from "./ui/dialog";
+import ProfileSettingsDialog from "./ProfileSettingsDialog";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 type Props = {
   user: User | null;
@@ -49,19 +52,29 @@ function UserButton({ user }: Props) {
   ];
 
   return (
-    <>
+    <Dialog>
       {user ? (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="secondary" size="icon" className="rounded-full">
-              <CircleUser className="h-5 w-5" />
+              <Avatar>
+                <AvatarImage src={user.avatarUrl || undefined} />
+                <AvatarFallback className="text-4xl">
+                  {user.username[0].toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
               <span className="sr-only">Toggle user menu</span>
             </Button>
           </DropdownMenuTrigger>
+
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuLabel>{user.username}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Settings</DropdownMenuItem>
+
+            <DialogTrigger asChild>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+            </DialogTrigger>
+
             <form action={handleClickSignOutButton}>
               <DropdownMenuItem>
                 <button
@@ -103,7 +116,9 @@ function UserButton({ user }: Props) {
           </Link>
         </>
       )}
-    </>
+
+      {user && <ProfileSettingsDialog user={user} />}
+    </Dialog>
   );
 }
 
