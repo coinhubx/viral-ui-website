@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS "components" (
 	"user_id" text NOT NULL,
 	"content" text NOT NULL,
 	"file_name" text NOT NULL,
+	"score" integer DEFAULT 0 NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );

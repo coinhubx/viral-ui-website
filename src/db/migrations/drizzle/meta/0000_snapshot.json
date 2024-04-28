@@ -1,5 +1,5 @@
 {
-  "id": "61fe1961-34b7-4cc2-bbf5-887e5464da6f",
+  "id": "67a5fa1b-3453-40a1-8abb-598442c9bec0",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -31,6 +31,13 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "score": {
+          "name": "score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
         },
         "created_at": {
           "name": "created_at",
