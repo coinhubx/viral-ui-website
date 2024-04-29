@@ -3,7 +3,7 @@ import ModeToggle from "./ModeToggle";
 import UserButton from "./UserButton";
 import { getUser } from "@/lib/auth";
 import Sidebar from "./Sidebar";
-import { GitHubIcon } from "./SocialIcons";
+import { GitHubIcon, XIcon, YouTubeIcon } from "./SocialIcons";
 
 async function Header() {
   const user = await getUser();
@@ -47,8 +47,17 @@ async function Header() {
         >
           <GitHubIcon className="size-6" />
         </a>
+        <a target="_blank" href="https://twitter.com/ColeBlender">
+          <XIcon className="size-6" />
+        </a>
+        <a
+          target="_blank"
+          href="https://youtube.com/@coleblender?sub_confirmation=1"
+        >
+          <YouTubeIcon className="size-6" />
+        </a>
 
-        <ModeToggle />
+        {/* <ModeToggle /> */}
 
         <UserButton user={user} />
       </div>
