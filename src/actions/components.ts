@@ -26,6 +26,28 @@ export const submitComponentAction = async (
   }
 };
 
+export const deleteComponentAction = async (componentFileName: string) => {
+  try {
+    const user = await getUser();
+    if (!user) throw new Error("Must be logged in to delete a component");
+
+    await db
+      .delete(components)
+      .where(
+        and(
+          eq(components.fileName, componentFileName),
+          eq(components.userId, user.id),
+        ),
+      );
+
+    revalidatePath("/");
+
+    return { errorMessage: null };
+  } catch (error) {
+    return { errorMessage: getErrorMessage(error) };
+  }
+};
+
 export const upVoteAction = async (componentId: number) => {
   try {
     const user = await getUser();

@@ -7,6 +7,7 @@ import {
   ComponentContent,
   CopyCodeButton,
   CopyCommandButton,
+  DeleteComponentButton,
   Score,
 } from "./PostClientComponents";
 import db from "@/db";
@@ -88,13 +89,19 @@ async function Post({ component, user }: Props) {
       </div>
 
       <div className="relative mb-2 flex items-center">
-        <p className="mr-10 font-medium">{component.fileName}</p>
+        <p className="mr-[70px] w-full font-medium">{component.fileName}</p>
 
-        <CopyCommandButton
-          componentFileName={component.fileName}
-          user={user}
-          loggedInUser={loggedInUser}
-        />
+        <div className="absolute right-2 flex">
+          {loggedInUser?.id === component.userId && (
+            <DeleteComponentButton componentFileName={component.fileName} />
+          )}
+
+          <CopyCommandButton
+            componentFileName={component.fileName}
+            user={user}
+            loggedInUser={loggedInUser}
+          />
+        </div>
       </div>
 
       <div className="relative">

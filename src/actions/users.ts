@@ -3,6 +3,7 @@
 import db from "@/db";
 import { users } from "@/db/schemas/users";
 import { getSupabaseAuth, getUser } from "@/lib/auth";
+import { PackageManager } from "@/lib/types";
 import { getErrorMessage } from "@/lib/utils";
 import { eq } from "drizzle-orm";
 
@@ -79,7 +80,7 @@ export const updateProfileAction = async (formData: FormData) => {
     if (!user) throw new Error("Must be logged in to update profile");
 
     const avatarUrl = formData.get("avatarUrl") as string;
-    const packageManager = formData.get("packageManager") as string;
+    const packageManager = formData.get("packageManager") as PackageManager;
     const xUrl = formData.get("xUrl") as string;
     const githubUrl = formData.get("githubUrl") as string;
     const youtubeUrl = formData.get("youtubeUrl") as string;

@@ -8,14 +8,109 @@ import {
   Clipboard,
   ClipboardCheck,
   SquareTerminal,
+  Trash2,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { useEffect, useState, useTransition } from "react";
 import { Button } from "./ui/button";
 import { useToast } from "./ui/use-toast";
-import { downVoteAction, upVoteAction } from "@/actions/components";
+import {
+  deleteComponentAction,
+  downVoteAction,
+  upVoteAction,
+} from "@/actions/components";
 import { formatScore } from "@/lib/utils";
 import { codeToHtml } from "shiki";
 import { User } from "@/lib/types";
+import { set } from "zod";
+
+type DeleteComponentButtonProps = {
+  componentFileName: string;
+};
+
+export function DeleteComponentButton({
+  componentFileName,
+}: DeleteComponentButtonProps) {
+  const { toast } = useToast();
+
+  const [open, setOpen] = useState(false);
+
+  const [isPending, startTransition] = useTransition();
+
+  const handleClickDeleteComponentButton = () => {
+    startTransition(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      const { errorMessage } = await deleteComponentAction(componentFileName);
+      if (!errorMessage) {
+        toast({
+          title: "Success!",
+          description: "Component successfully deleted",
+          variant: "success",
+        });
+        setOpen(false);
+      } else {
+        toast({
+          title: "Error!",
+          description: errorMessage,
+          variant: "destructive",
+        });
+      }
+    });
+  };
+
+  return (
+    <AlertDialog open={open}>
+      <AlertDialogTrigger asChild>
+        <button
+          className="rounded-md p-2 transition-colors duration-200 ease-in-out hover:bg-destructive"
+          onClick={() => setOpen(true)}
+        >
+          <Trash2 className="size-4" />
+        </button>
+      </AlertDialogTrigger>
+
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogDescription>
+            This action cannot be undone. This will permanently delete your
+            component.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+
+        <AlertDialogFooter>
+          <AlertDialogCancel
+            disabled={isPending}
+            onClick={() => setOpen(false)}
+          >
+            Cancel
+          </AlertDialogCancel>
+
+          <form action={handleClickDeleteComponentButton}>
+            <AlertDialogAction
+              className="bg-destructive hover:bg-destructive/80"
+              disabled={isPending}
+              type="submit"
+            >
+              Delete
+            </AlertDialogAction>
+          </form>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
 
 type CopyCommandButtonProps = {
   componentFileName: string;
@@ -51,7 +146,7 @@ export function CopyCommandButton({
 
   return (
     <button
-      className="absolute right-2 rounded-md p-2 transition-colors duration-200 ease-in-out hover:bg-muted"
+      className="rounded-md p-2 transition-colors duration-200 ease-in-out hover:bg-muted"
       onClick={handleClickCopyCommandButton}
     >
       {justCopiedCommand ? (
