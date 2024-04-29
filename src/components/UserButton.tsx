@@ -9,8 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button, buttonVariants } from "./ui/button";
-import { CircleUser } from "lucide-react";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useToast } from "./ui/use-toast";
 import { signOutAction } from "@/actions/users";
 import { User } from "@/lib/types";
@@ -51,15 +50,21 @@ function UserButton({ user }: Props) {
     }),
   ];
 
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [isPendingDialog, startTransitionDialog] = useTransition();
+
   return (
-    <Dialog>
+    <Dialog
+      open={dialogOpen}
+      onOpenChange={(open) => !isPendingDialog && setDialogOpen(open)}
+    >
       {user ? (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="secondary" size="icon" className="rounded-full">
               <Avatar>
                 <AvatarImage src={user.avatarUrl || undefined} />
-                <AvatarFallback className="text-4xl">
+                <AvatarFallback className="text-lg">
                   {user.username[0].toUpperCase()}
                 </AvatarFallback>
               </Avatar>
@@ -67,8 +72,10 @@ function UserButton({ user }: Props) {
             </Button>
           </DropdownMenuTrigger>
 
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>{user.username}</DropdownMenuLabel>
+          <DropdownMenuContent align="end" className="w-48">
+            <DropdownMenuLabel className="overflow-hidden truncate">
+              {user.username}
+            </DropdownMenuLabel>
             <DropdownMenuSeparator />
 
             <DialogTrigger asChild>
@@ -117,7 +124,14 @@ function UserButton({ user }: Props) {
         </>
       )}
 
-      {user && <ProfileSettingsDialog user={user} />}
+      {user && (
+        <ProfileSettingsDialog
+          user={user}
+          setDialogOpen={setDialogOpen}
+          isPendingDialog={isPendingDialog}
+          startTransitionDialog={startTransitionDialog}
+        />
+      )}
     </Dialog>
   );
 }

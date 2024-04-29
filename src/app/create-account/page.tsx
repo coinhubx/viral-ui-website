@@ -21,9 +21,19 @@ function CreateAccountPage() {
 
   const { translateY, containerRef, titleRef } = useTranslateY();
 
-  const usernameSchema = z.string().refine((username) => {
-    return !/[ <>:"\\`|?*']/.test(username);
-  }, "Username contains invalid characters");
+  const usernameSchema = z
+    .string()
+    .refine((username) => {
+      return !/[ <>:"\\`|?*']/.test(username);
+    }, "Username contains invalid characters")
+    .refine(
+      (username) => username.length <= 16,
+      "Username must not exceed 16 characters",
+    )
+    .refine(
+      (username) => username.length >= 3,
+      "Username must be at least 3 characters",
+    );
 
   const handleClickCreateAccountButton = async (formData: FormData) => {
     const username = formData.get("username") as string;

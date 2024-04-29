@@ -12,6 +12,7 @@ import {
 import db from "@/db";
 import { votes } from "@/db/schemas/votes";
 import { and, eq } from "drizzle-orm";
+import { getUser } from "@/lib/auth";
 
 type Props = {
   component: Component;
@@ -19,6 +20,8 @@ type Props = {
 };
 
 async function Post({ component, user }: Props) {
+  const loggedInUser = await getUser();
+
   const _votes = await db
     .select()
     .from(votes)
@@ -87,7 +90,11 @@ async function Post({ component, user }: Props) {
       <div className="relative mb-2 flex items-center">
         <p className="mr-10 font-medium">{component.fileName}</p>
 
-        <CopyCommandButton componentFileName={component.fileName} user={user} />
+        <CopyCommandButton
+          componentFileName={component.fileName}
+          user={user}
+          loggedInUser={loggedInUser}
+        />
       </div>
 
       <div className="relative">

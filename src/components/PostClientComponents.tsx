@@ -15,22 +15,35 @@ import { useToast } from "./ui/use-toast";
 import { downVoteAction, upVoteAction } from "@/actions/components";
 import { formatScore } from "@/lib/utils";
 import { codeToHtml } from "shiki";
+import { User } from "@/lib/types";
 
 type CopyCommandButtonProps = {
   componentFileName: string;
   user: DBUser;
+  loggedInUser: User | null;
 };
 
 export function CopyCommandButton({
   componentFileName,
   user,
+  loggedInUser,
 }: CopyCommandButtonProps) {
   const [justCopiedCommand, setJustCopiedCommand] = useState(false);
 
   const handleClickCopyCommandButton = () => {
     setJustCopiedCommand(true);
 
-    const command = `pnpm dlx viral-ui add ${user.username} ${componentFileName}`;
+    let packageManagerScript = "pnpm dlx";
+
+    if (loggedInUser?.packageManager === "npm") {
+      packageManagerScript = "npx";
+    } else if (loggedInUser?.packageManager === "yarn") {
+      packageManagerScript = "npx";
+    } else if (loggedInUser?.packageManager === "bun") {
+      packageManagerScript = "bunx --bun";
+    }
+
+    const command = `${packageManagerScript} viral-ui@latest add ${user.username} ${componentFileName}`;
 
     navigator.clipboard.writeText(command);
     setTimeout(() => setJustCopiedCommand(false), 2000);

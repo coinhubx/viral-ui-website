@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import {
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -11,27 +10,44 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { deleteFromS3, uploadToS3 } from "@/lib/s3";
-import { ChangeEvent, useState, useTransition } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  TransitionStartFunction,
+  useState,
+  useTransition,
+} from "react";
 import { useToast } from "./ui/use-toast";
 import { updateProfileAction } from "@/actions/users";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { User } from "@/lib/types";
+import { PackageManager, User } from "@/lib/types";
+import SelectPackageManager from "./SelectPackageManager";
 
 type Props = {
   user: User;
+  setDialogOpen: Dispatch<SetStateAction<boolean>>;
+  isPendingDialog: boolean;
+  startTransitionDialog: TransitionStartFunction;
 };
 
-function ProfileSettingsDialog({ user }: Props) {
+function ProfileSettingsDialog({
+  user,
+  setDialogOpen,
+  isPendingDialog,
+  startTransitionDialog,
+}: Props) {
   const { toast } = useToast();
 
   const [selectedAvatarUrl, setSelectedAvatarUrl] = useState(
     user.avatarUrl || "",
   );
-
-  const [isPending, startTransition] = useTransition();
+  const [packageManager, setPackageManager] = useState<PackageManager>(
+    user.packageManager,
+  );
 
   const handleUpdateProfile = async (formData: FormData) => {
-    startTransition(async () => {
+    startTransitionDialog(async () => {
       const selectedAvatarUrlFile = formData.get("selectedAvatarUrl") as File;
 
       if (selectedAvatarUrlFile.size > 0) {
@@ -68,6 +84,7 @@ function ProfileSettingsDialog({ user }: Props) {
           description: "Profile successfully updated",
           variant: "success",
         });
+        setDialogOpen(false);
       } else {
         toast({
           title: "Error!",
@@ -91,19 +108,22 @@ function ProfileSettingsDialog({ user }: Props) {
   };
 
   return (
-    <DialogContent className="sm:max-w-[425px]">
+    <DialogContent
+      className="sm:max-w-[425px]"
+      onOpenAutoFocus={(e) => e.preventDefault()}
+    >
       <DialogHeader>
-        <DialogTitle>Profile Settings</DialogTitle>
+        <DialogTitle className="text-center text-2xl">
+          Profile Settings
+        </DialogTitle>
       </DialogHeader>
 
-      <form
-        className={`flex w-full flex-col gap-4 transition-opacity duration-300 ease-in-out ${isPending && "-z-50 opacity-0"}`}
-        action={handleUpdateProfile}
-      >
-        <div className="relative h-full self-center">
+      <form className="flex w-full flex-col gap-4" action={handleUpdateProfile}>
+        <div className="flex w-full justify-center py-2">
           {/* Image preview */}
           <Avatar
-            className="size-56 cursor-pointer"
+            aria-disabled={isPendingDialog}
+            className="h-40 w-40 cursor-pointer aria-disabled:cursor-not-allowed"
             onClick={() =>
               document.getElementById("selectedAvatarUrl")?.click()
             }
@@ -121,7 +141,7 @@ function ProfileSettingsDialog({ user }: Props) {
             type="file"
             accept="image/*"
             hidden
-            disabled={isPending}
+            disabled={isPendingDialog}
             onChange={handleFileChange}
             max={1}
           />
@@ -136,22 +156,22 @@ function ProfileSettingsDialog({ user }: Props) {
           <div>
             <Label
               htmlFor="packageManager"
-              className="mb-1 ml-2 block text-sm font-medium"
+              className="mb-1 ml-2 block text-sm font-medium text-muted-foreground"
             >
               Package Manager
             </Label>
-            <Input
-              id="packageManager"
-              name="packageManager"
-              defaultValue={user.packageManager || ""}
-              disabled={isPending}
+            <SelectPackageManager
+              packageManager={packageManager}
+              setPackageManager={setPackageManager}
+              disabled={isPendingDialog}
             />
+            <input type="hidden" name="packageManager" value={packageManager} />
           </div>
 
           <div>
             <Label
               htmlFor="xUrl"
-              className="mb-1 ml-2 block text-sm font-medium"
+              className="mb-1 ml-2 block text-sm font-medium text-muted-foreground"
             >
               X Url
             </Label>
@@ -159,14 +179,14 @@ function ProfileSettingsDialog({ user }: Props) {
               id="xUrl"
               name="xUrl"
               defaultValue={user.xUrl || ""}
-              disabled={isPending}
+              disabled={isPendingDialog}
             />
           </div>
 
           <div>
             <Label
               htmlFor="githubUrl"
-              className="mb-1 ml-2 block text-sm font-medium"
+              className="mb-1 ml-2 block text-sm font-medium text-muted-foreground"
             >
               GitHub Url
             </Label>
@@ -174,14 +194,14 @@ function ProfileSettingsDialog({ user }: Props) {
               id="githubUrl"
               name="githubUrl"
               defaultValue={user.githubUrl || ""}
-              disabled={isPending}
+              disabled={isPendingDialog}
             />
           </div>
 
           <div>
             <Label
               htmlFor="youtubeUrl"
-              className="mb-1 ml-2 block text-sm font-medium"
+              className="mb-1 ml-2 block text-sm font-medium text-muted-foreground"
             >
               YouTube Url
             </Label>
@@ -189,13 +209,15 @@ function ProfileSettingsDialog({ user }: Props) {
               id="youtubeUrl"
               name="youtubeUrl"
               defaultValue={user.youtubeUrl || ""}
-              disabled={isPending}
+              disabled={isPendingDialog}
             />
           </div>
         </div>
 
         <DialogFooter>
-          <Button type="submit">Save changes</Button>
+          <Button type="submit" disabled={isPendingDialog}>
+            Save changes
+          </Button>
         </DialogFooter>
       </form>
     </DialogContent>
