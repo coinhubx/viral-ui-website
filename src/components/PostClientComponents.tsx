@@ -32,7 +32,6 @@ import {
 import { formatScore } from "@/lib/utils";
 import { codeToHtml } from "shiki";
 import { User } from "@/lib/types";
-import { set } from "zod";
 
 type DeleteComponentButtonProps = {
   componentFileName: string;
