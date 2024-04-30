@@ -55,10 +55,7 @@ async function Header() {
         <a target="_blank" href="https://twitter.com/ColeBlender">
           <XIcon className="size-6" />
         </a>
-        <a
-          target="_blank"
-          href="https://youtube.com/@coleblender?sub_confirmation=1"
-        >
+        <a target="_blank" href="https://youtube.com/@coleblender">
           <YouTubeIcon className="size-6" />
         </a>
 
