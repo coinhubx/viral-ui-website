@@ -65,12 +65,12 @@ export async function deleteFromS3(imageUrl: string) {
       throw new Error(errorMessage);
     }
 
-    const uploadResponse = await fetch(url, {
+    const deleteResponse = await fetch(url, {
       method: "DELETE",
       body: fileKey,
     });
 
-    if (!uploadResponse.ok) {
+    if (!deleteResponse.ok) {
       throw new Error("Image deletion failed");
     }
 
