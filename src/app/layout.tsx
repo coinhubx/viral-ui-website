@@ -6,7 +6,7 @@ import Header from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "ViralUI",
-  description: "UI Components for Next.js ",
+  description: "UI Components for Next.js",
 };
 
 export default function RootLayout({
