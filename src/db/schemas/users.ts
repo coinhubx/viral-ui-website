@@ -1,6 +1,6 @@
 import { pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
-const packageManagerEnum = pgEnum("package_manager", [
+export const packageManagerEnum = pgEnum("package_manager", [
   "pnpm",
   "npm",
   "yarn",
