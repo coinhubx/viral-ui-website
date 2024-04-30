@@ -103,7 +103,7 @@ function UserButton({ user }: Props) {
               buttonVariants({
                 variant: "outline",
                 size: "default",
-                className: "hidden sm:block",
+                className: "hidden lg:block",
               }),
             )}
           >

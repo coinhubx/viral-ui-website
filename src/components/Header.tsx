@@ -1,5 +1,4 @@
 import Link from "next/link";
-import ModeToggle from "./ModeToggle";
 import UserButton from "./UserButton";
 import { getUser } from "@/lib/auth";
 import Sidebar from "./Sidebar";
@@ -9,8 +8,8 @@ async function Header() {
   const user = await getUser();
 
   return (
-    <header className="flex h-16 w-full items-center gap-4 border-b bg-background px-4 md:px-6">
-      <nav className="hidden w-full flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
+    <header className="flex h-16 w-full items-center border-b bg-background px-4 lg:px-6">
+      <nav className="hidden w-full items-center gap-4 text-sm font-medium md:flex">
         <Link
           href="/hot"
           className="flex items-center gap-2 text-lg font-semibold text-primary md:text-base"
@@ -40,7 +39,13 @@ async function Header() {
 
       <Sidebar user={user} />
 
-      <div className="flex w-full items-center justify-end gap-4 md:ml-auto md:w-fit md:gap-2 lg:gap-4">
+      <div className="ml-auto flex items-center gap-4">
+        <Link
+          href="/about"
+          className="hidden whitespace-nowrap text-sm font-medium text-muted-foreground transition-colors hover:text-foreground md:block"
+        >
+          About
+        </Link>
         <a
           target="_blank"
           href="https://github.com/ColeBlender/viral-ui-website"
@@ -56,8 +61,6 @@ async function Header() {
         >
           <YouTubeIcon className="size-6" />
         </a>
-
-        {/* <ModeToggle /> */}
 
         <UserButton user={user} />
       </div>

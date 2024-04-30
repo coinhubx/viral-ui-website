@@ -55,6 +55,12 @@ function Sidebar({ user }: Props) {
           >
             My Likes
           </Link>
+          <Link
+            href="/about"
+            className="text-muted-foreground hover:text-foreground"
+          >
+            About
+          </Link>
         </nav>
       </SheetContent>
     </Sheet>

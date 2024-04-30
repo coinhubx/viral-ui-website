@@ -12,8 +12,8 @@ export async function middleware(request: NextRequest) {
 
   if (path === "/") return NextResponse.redirect(new URL("/hot", request.url));
 
-  const homePaths = ["/hot", "/latest", "/all-time"];
-  if (homePaths.includes(path) || path.includes(".")) return response;
+  const safePaths = ["/hot", "/latest", "/all-time", "/about"];
+  if (safePaths.includes(path) || path.includes(".")) return response;
 
   const authPaths = ["/login", "/create-account"];
   const user = await getUser(request, response);
