@@ -24,13 +24,13 @@ async function Header() {
           Add Component
         </Link>
         <Link
-          href={`/profile/${user?.username}/latest`}
+          href={`/profile/${user?.username}/hot`}
           className="text-muted-foreground transition-colors hover:text-foreground"
         >
           My Components
         </Link>
         <Link
-          href="/my-likes/latest"
+          href="/my-likes/hot"
           className="text-muted-foreground transition-colors hover:text-foreground"
         >
           My Likes

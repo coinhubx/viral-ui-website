@@ -41,7 +41,7 @@ async function Post({ component, user }: Props) {
       <div className="mb-6 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Link
-            href={`/profile/${user.username}/latest`}
+            href={`/profile/${user.username}/hot`}
             className="flex items-center gap-2"
           >
             <Avatar>
