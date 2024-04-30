@@ -93,7 +93,10 @@ async function Post({ component, user }: Props) {
 
         <div className="absolute right-2 flex">
           {loggedInUser?.id === component.userId && (
-            <DeleteComponentButton componentFileName={component.fileName} />
+            <DeleteComponentButton
+              componentId={component.id}
+              componentFileName={component.fileName}
+            />
           )}
 
           <CopyCommandButton

@@ -26,10 +26,15 @@ export const submitComponentAction = async (
   }
 };
 
-export const deleteComponentAction = async (componentFileName: string) => {
+export const deleteComponentAction = async (
+  componentId: number,
+  componentFileName: string,
+) => {
   try {
     const user = await getUser();
     if (!user) throw new Error("Must be logged in to delete a component");
+
+    await db.delete(votes).where(eq(votes.componentId, componentId));
 
     await db
       .delete(components)

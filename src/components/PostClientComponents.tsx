@@ -34,10 +34,12 @@ import { codeToHtml } from "shiki";
 import { User } from "@/lib/types";
 
 type DeleteComponentButtonProps = {
+  componentId: number;
   componentFileName: string;
 };
 
 export function DeleteComponentButton({
+  componentId,
   componentFileName,
 }: DeleteComponentButtonProps) {
   const { toast } = useToast();
@@ -50,7 +52,10 @@ export function DeleteComponentButton({
     startTransition(async () => {
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      const { errorMessage } = await deleteComponentAction(componentFileName);
+      const { errorMessage } = await deleteComponentAction(
+        componentId,
+        componentFileName,
+      );
       if (!errorMessage) {
         toast({
           title: "Success!",
