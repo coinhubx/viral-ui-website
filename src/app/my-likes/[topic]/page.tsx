@@ -1,7 +1,6 @@
 import Post from "@/components/Post";
 import db from "@/db";
-import { Component, components } from "@/db/schemas/components";
-import { DBUser, users } from "@/db/schemas/users";
+import { Component, components, DBUser, users } from "@/db/schema";
 import { getUser } from "@/lib/auth";
 import { desc, eq, sql } from "drizzle-orm";
 import Link from "next/link";

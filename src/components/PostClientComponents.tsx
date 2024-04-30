@@ -1,6 +1,5 @@
 "use client";
 
-import { DBUser } from "@/db/schemas/users";
 import {
   ArrowBigDown,
   ArrowBigUp,
@@ -32,6 +31,7 @@ import {
 import { formatScore } from "@/lib/utils";
 import { codeToHtml } from "shiki";
 import { User } from "@/lib/types";
+import { DBUser } from "@/db/schema";
 
 type DeleteComponentButtonProps = {
   componentId: number;

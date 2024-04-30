@@ -1,5 +1,3 @@
-import { Component } from "@/db/schemas/components";
-import { DBUser } from "@/db/schemas/users";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { GitHubIcon, XIcon, YouTubeIcon } from "./SocialIcons";
 import Link from "next/link";
@@ -11,9 +9,9 @@ import {
   Score,
 } from "./PostClientComponents";
 import db from "@/db";
-import { votes } from "@/db/schemas/votes";
 import { and, eq } from "drizzle-orm";
 import { getUser } from "@/lib/auth";
+import { Component, DBUser, votes } from "@/db/schema";
 
 type Props = {
   component: Component;

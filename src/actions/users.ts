@@ -1,7 +1,7 @@
 "use server";
 
 import db from "@/db";
-import { users } from "@/db/schemas/users";
+import { users } from "@/db/schema";
 import { getSupabaseAuth, getUser } from "@/lib/auth";
 import { PackageManager } from "@/lib/types";
 import { getErrorMessage } from "@/lib/utils";

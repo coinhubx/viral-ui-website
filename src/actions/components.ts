@@ -1,8 +1,7 @@
 "use server";
 
 import db from "@/db";
-import { components } from "@/db/schemas/components";
-import { votes } from "@/db/schemas/votes";
+import { components, votes } from "@/db/schema";
 import { getUser } from "@/lib/auth";
 import { getErrorMessage } from "@/lib/utils";
 import { and, eq, sql } from "drizzle-orm";

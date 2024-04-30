@@ -1,6 +1,5 @@
 import db from "@/db";
-import { Component, components } from "@/db/schemas/components";
-import { users } from "@/db/schemas/users";
+import { Component, components, users } from "@/db/schema";
 import { and, eq, inArray } from "drizzle-orm";
 
 export async function POST(req: Request) {

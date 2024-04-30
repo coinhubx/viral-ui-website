@@ -1,9 +1,9 @@
 import { cookies } from "next/headers";
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import db from "@/db";
-import { users } from "@/db/schemas/users";
 import { eq } from "drizzle-orm";
 import { User } from "./types";
+import { users } from "@/db/schema";
 
 export const getUser = async () => {
   const auth = getSupabaseAuth();
