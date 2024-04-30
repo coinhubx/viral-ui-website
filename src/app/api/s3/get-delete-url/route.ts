@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
       `https://${process.env.NEXT_PUBLIC_AWS_BUCKET_NAME}.s3-us-west-1.amazonaws.com/`,
     )[1];
 
-    const s3: any = new S3Client({
+    const s3 = new S3Client({
       region: "us-west-1",
       credentials: {
         accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    const command: any = new DeleteObjectCommand({
+    const command = new DeleteObjectCommand({
       Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME,
       Key: fileKey,
     });
