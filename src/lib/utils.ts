@@ -25,9 +25,9 @@ export function formatScore(score: number) {
 }
 
 export const toS3SafeFormat = (input: string): string => {
-  return input
-    .trim()
-    .replace(/\s+/g, "-")
-    .replace(/[&$@=;:+?^`'"<>#%{}[\]|~\\/]/g, "")
-    .toLowerCase();
+  // remove all non-letter and non-hyphen characters
+  let cleaned = input.replace(/[^a-zA-Z-]/g, "");
+  // remove leading and trailing hyphens
+  cleaned = cleaned.replace(/^-+|-+$/g, "");
+  return cleaned;
 };

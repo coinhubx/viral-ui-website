@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const fileKey = `${folder}/${Date.now().toString()}-${toS3SafeFormat(fileName)}`;
+    const fileKey = `${folder}/${Date.now().toString()}${toS3SafeFormat(fileName)}`;
 
     const s3 = new S3Client({
       region: "us-west-1",
