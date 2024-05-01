@@ -21,14 +21,22 @@ type Props = {
 async function Post({ component, user }: Props) {
   const loggedInUser = await getUser();
 
-  const _votes = await db
-    .select()
-    .from(votes)
-    .where(and(eq(votes.componentId, component.id), eq(votes.userId, user.id)));
-
   let currentVote = 0;
-  if (_votes.length) {
-    currentVote = _votes[0].vote;
+
+  if (loggedInUser) {
+    const _votes = await db
+      .select()
+      .from(votes)
+      .where(
+        and(
+          eq(votes.componentId, component.id),
+          eq(votes.userId, loggedInUser.id),
+        ),
+      );
+
+    if (_votes.length) {
+      currentVote = _votes[0].vote;
+    }
   }
 
   return (
